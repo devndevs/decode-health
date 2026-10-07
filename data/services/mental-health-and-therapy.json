@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "therapy-session",
+    "category": "mental_health",
+    "benefitCategory": "mental_health",
+    "setting": "outpatient",
+    "name": { "en": "Therapy session (about 1 hour)", "es": "Sesión de terapia (aproximadamente 1 hora)" },
+    "summary": {
+      "en": "One individual psychotherapy session of about 53 minutes or more. California law requires state-regulated health plans to cover medically necessary mental health care.",
+      "es": "Una sesión individual de psicoterapia de unos 53 minutos o más. La ley de California exige que los planes de salud regulados por el estado cubran la atención de salud mental médicamente necesaria."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "90837", "billingClass": "any", "label": { "en": "Therapy session", "es": "Sesión de terapia" } }
+    ],
+    "keywords": ["therapy", "counseling", "psychotherapy", "mental health", "terapia", "salud mental"]
+  },
+  {
+    "slug": "psychiatric-evaluation",
+    "category": "mental_health",
+    "benefitCategory": "mental_health",
+    "setting": "outpatient",
+    "name": { "en": "Mental health evaluation", "es": "Evaluación de salud mental" },
+    "summary": {
+      "en": "A first appointment to assess your mental health and plan treatment.",
+      "es": "Una primera cita para evaluar su salud mental y planear el tratamiento."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "90791", "billingClass": "any", "label": { "en": "Evaluation", "es": "Evaluación" } }
+    ],
+    "keywords": ["psychiatry", "evaluation", "intake", "evaluación", "psiquiatría"]
+  },
+  {
+    "slug": "physical-therapy-evaluation",
+    "category": "therapy",
+    "benefitCategory": "rehab_therapy",
+    "setting": "outpatient",
+    "name": { "en": "Physical therapy evaluation", "es": "Evaluación de terapia física" },
+    "summary": {
+      "en": "Your first physical therapy visit, where the therapist assesses you and makes a plan.",
+      "es": "Su primera visita de terapia física, donde el terapeuta lo evalúa y hace un plan."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "97161", "billingClass": "any", "label": { "en": "Evaluation", "es": "Evaluación" } }
+    ],
+    "keywords": ["pt", "physical therapy", "rehab", "fisioterapia", "terapia física"]
+  },
+  {
+    "slug": "physical-therapy-exercise",
+    "category": "therapy",
+    "benefitCategory": "rehab_therapy",
+    "setting": "outpatient",
+    "name": { "en": "Physical therapy exercises (per 15 minutes)", "es": "Ejercicios de terapia física (cada 15 minutos)" },
+    "summary": {
+      "en": "Billed in 15-minute units. A typical session includes 2–4 units, sometimes with other treatments.",
+      "es": "Se cobra por unidades de 15 minutos. Una sesión típica incluye de 2 a 4 unidades, a veces con otros tratamientos."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "97110", "billingClass": "any", "label": { "en": "Therapeutic exercise (15 min)", "es": "Ejercicio terapéutico (15 min)" } }
+    ],
+    "keywords": ["pt", "physical therapy", "exercise", "fisioterapia"]
+  }
+]

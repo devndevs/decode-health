@@ -1,0 +1,153 @@
+[
+  {
+    "slug": "medi-cal-adults",
+    "kind": "coverage",
+    "name": { "en": "Medi-Cal (adults 19–64)", "es": "Medi-Cal (adultos de 19 a 64 años)" },
+    "summary": {
+      "en": "California's free or low-cost health coverage. Adults with income up to about 138% of the federal poverty level usually qualify. You can apply any time of year. Rules for some adults without satisfactory immigration status changed in 2026 — a free enrollment counselor can tell you what applies to you.",
+      "es": "La cobertura médica gratuita o de bajo costo de California. Los adultos con ingresos de hasta aproximadamente el 138% del nivel federal de pobreza generalmente califican. Puede solicitarla en cualquier momento del año. Las reglas para algunos adultos sin un estatus migratorio satisfactorio cambiaron en 2026; un consejero de inscripción gratuito puede decirle qué aplica en su caso."
+    },
+    "url": "https://benefitscal.com",
+    "regions": ["ca"],
+    "eligibility": { "maxFplPercent": 138, "minAge": 19, "maxAge": 64 },
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.dhcs.ca.gov/services/medi-cal"]
+  },
+  {
+    "slug": "medi-cal-children",
+    "kind": "coverage",
+    "name": { "en": "Medi-Cal for children (under 19)", "es": "Medi-Cal para niños (menores de 19 años)" },
+    "summary": {
+      "en": "Children and teens can qualify for Medi-Cal at higher family incomes than adults — up to about 266% of the federal poverty level.",
+      "es": "Los niños y adolescentes pueden calificar para Medi-Cal con ingresos familiares más altos que los adultos: hasta aproximadamente el 266% del nivel federal de pobreza."
+    },
+    "url": "https://benefitscal.com",
+    "regions": ["ca"],
+    "eligibility": { "maxFplPercent": 266, "maxAge": 18 },
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.dhcs.ca.gov/services/medi-cal"]
+  },
+  {
+    "slug": "medi-cal-pregnancy",
+    "kind": "coverage",
+    "name": { "en": "Medi-Cal during pregnancy", "es": "Medi-Cal durante el embarazo" },
+    "summary": {
+      "en": "Pregnant people can qualify for Medi-Cal at higher incomes, with coverage continuing after the baby is born.",
+      "es": "Las personas embarazadas pueden calificar para Medi-Cal con ingresos más altos, y la cobertura continúa después de que nace el bebé."
+    },
+    "url": "https://benefitscal.com",
+    "regions": ["ca"],
+    "eligibility": { "maxFplPercent": 213, "pregnantOnly": true },
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.dhcs.ca.gov/services/medi-cal"]
+  },
+  {
+    "slug": "covered-california",
+    "kind": "coverage",
+    "name": { "en": "Covered California", "es": "Covered California" },
+    "summary": {
+      "en": "California's marketplace for private health plans. Many people get financial help that lowers the monthly cost. Enroll during open enrollment, or any time after a life change like losing a job or other coverage.",
+      "es": "El mercado de planes de salud privados de California. Muchas personas reciben ayuda financiera que reduce el costo mensual. Inscríbase durante el período de inscripción abierta, o en cualquier momento después de un cambio de vida como perder el trabajo u otra cobertura."
+    },
+    "url": "https://www.coveredca.com",
+    "regions": ["ca"],
+    "eligibility": { "minFplPercent": 139 },
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.coveredca.com"]
+  },
+  {
+    "slug": "hospital-financial-assistance",
+    "kind": "discount",
+    "name": { "en": "Hospital financial assistance", "es": "Asistencia financiera del hospital" },
+    "summary": {
+      "en": "California hospitals must offer free or discounted care to eligible patients with income up to 400% of the federal poverty level who are uninsured or have high medical costs. Ask the hospital's billing office for the application — you can apply even after you get a bill.",
+      "es": "Los hospitales de California deben ofrecer atención gratuita o con descuento a pacientes elegibles con ingresos de hasta el 400% del nivel federal de pobreza que no tienen seguro o tienen gastos médicos altos. Pida la solicitud en la oficina de facturación del hospital; puede solicitarla incluso después de recibir una factura."
+    },
+    "url": "https://hcai.ca.gov/affordability/hospital-fair-billing-program/",
+    "regions": ["ca"],
+    "eligibility": { "maxFplPercent": 400 },
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://hcai.ca.gov/affordability/hospital-fair-billing-program/"]
+  },
+  {
+    "slug": "community-health-centers",
+    "kind": "clinic",
+    "name": { "en": "Community health centers (sliding-fee clinics)", "es": "Centros de salud comunitarios (tarifas según ingresos)" },
+    "summary": {
+      "en": "Federally funded health centers serve everyone, with or without insurance, and charge based on what you can afford. Many offer primary care, dental, mental health, and help signing up for Medi-Cal.",
+      "es": "Los centros de salud con fondos federales atienden a todos, con o sin seguro, y cobran según lo que usted puede pagar. Muchos ofrecen atención primaria, dental, de salud mental y ayuda para inscribirse en Medi-Cal."
+    },
+    "url": "https://findahealthcenter.hrsa.gov/",
+    "regions": ["ca"],
+    "eligibility": null,
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://findahealthcenter.hrsa.gov/"]
+  },
+  {
+    "slug": "good-faith-estimate",
+    "kind": "rights",
+    "name": { "en": "Your right to a Good Faith Estimate", "es": "Su derecho a un Cálculo de Buena Fe" },
+    "summary": {
+      "en": "If you're uninsured or paying yourself, providers must give you a written cost estimate when you schedule care at least 3 business days ahead, or if you ask. If your bill is at least $400 more than the estimate, you can dispute it.",
+      "es": "Si no tiene seguro o paga usted mismo, los proveedores deben darle un cálculo de costos por escrito cuando programa su atención con al menos 3 días hábiles de anticipación, o si usted lo pide. Si su factura es al menos $400 más alta que el cálculo, puede disputarla."
+    },
+    "url": "https://www.cms.gov/nosurprises",
+    "regions": ["ca"],
+    "eligibility": null,
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.cms.gov/nosurprises"]
+  },
+  {
+    "slug": "surprise-billing-protection",
+    "kind": "rights",
+    "name": { "en": "Protection from surprise medical bills", "es": "Protección contra facturas médicas sorpresa" },
+    "summary": {
+      "en": "For emergency care, and for out-of-network doctors at an in-network hospital, you generally can't be billed more than your in-network costs.",
+      "es": "Por atención de emergencia, y por médicos fuera de la red en un hospital dentro de la red, por lo general no pueden cobrarle más que sus costos dentro de la red."
+    },
+    "url": "https://www.cms.gov/nosurprises",
+    "regions": ["ca"],
+    "eligibility": null,
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://www.cms.gov/nosurprises"]
+  },
+  {
+    "slug": "health-consumer-alliance",
+    "kind": "hotline",
+    "name": { "en": "Health Consumer Alliance", "es": "Health Consumer Alliance" },
+    "summary": {
+      "en": "Free help from legal aid groups across California with Medi-Cal, Covered California, and health insurance problems, including denied coverage and medical bills.",
+      "es": "Ayuda gratuita de organizaciones de asistencia legal en todo California con problemas de Medi-Cal, Covered California y seguros médicos, incluidas coberturas negadas y facturas médicas."
+    },
+    "url": "https://healthconsumer.org",
+    "regions": ["ca"],
+    "eligibility": null,
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://healthconsumer.org"]
+  },
+  {
+    "slug": "211-san-diego",
+    "kind": "hotline",
+    "name": { "en": "211 San Diego", "es": "211 San Diego" },
+    "summary": {
+      "en": "Free, confidential help 24/7 in many languages, connecting you to local health, food, housing, and financial resources. Dial 2-1-1.",
+      "es": "Ayuda gratuita y confidencial las 24 horas en muchos idiomas, que lo conecta con recursos locales de salud, comida, vivienda y apoyo financiero. Marque 2-1-1."
+    },
+    "url": "https://211sandiego.org",
+    "phone": "2-1-1",
+    "regions": ["ca-san-diego-county"],
+    "eligibility": null,
+    "verified": false,
+    "lastReviewed": "2026-10-07",
+    "sources": ["https://211sandiego.org"]
+  }
+]

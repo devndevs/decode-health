@@ -1,0 +1,17 @@
+{
+  "slug": "ucsd-la-jolla",
+  "name": "UC San Diego Health – Jacobs Medical Center (La Jolla)",
+  "system": "uc-san-diego-health",
+  "region": "ca-san-diego-county",
+  "address": { "line1": "9300 Campus Point Dr", "city": "La Jolla", "state": "CA", "zip": "92037" },
+  "identifiers": { "ccn": null, "npi": [], "stateLicense": null, "hcaiId": null },
+  "website": "https://health.ucsd.edu",
+  "financialAssistanceUrl": null,
+  "priceTransparency": {
+    "cmsHptTxtUrl": "https://health.ucsd.edu/cms-hpt.txt",
+    "locationNameMatch": ["La Jolla", "Jacobs"],
+    "mrfUrl": null
+  },
+  "verified": false,
+  "notes": "Campus includes Jacobs Medical Center, Sulpizio Cardiovascular Center, and Thornton Pavilion. TODO verify identifiers and how cms-hpt.txt names these locations."
+}

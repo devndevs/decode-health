@@ -1,0 +1,16 @@
+[
+  { "slug": "ca", "name": "California", "kind": "state", "parent": null, "active": true },
+
+  { "slug": "ca-socal", "name": "Southern California", "kind": "region", "parent": "ca", "active": true },
+
+  { "slug": "ca-san-diego-county", "name": "San Diego County", "kind": "county", "parent": "ca-socal", "fips": "06073", "active": true },
+  { "slug": "ca-imperial-county", "name": "Imperial County", "kind": "county", "parent": "ca-socal", "fips": "06025", "active": false },
+  { "slug": "ca-orange-county", "name": "Orange County", "kind": "county", "parent": "ca-socal", "fips": "06059", "active": false },
+  { "slug": "ca-riverside-county", "name": "Riverside County", "kind": "county", "parent": "ca-socal", "fips": "06065", "active": false },
+  { "slug": "ca-san-bernardino-county", "name": "San Bernardino County", "kind": "county", "parent": "ca-socal", "fips": "06071", "active": false },
+  { "slug": "ca-los-angeles-county", "name": "Los Angeles County", "kind": "county", "parent": "ca-socal", "fips": "06037", "active": false },
+  { "slug": "ca-ventura-county", "name": "Ventura County", "kind": "county", "parent": "ca-socal", "fips": "06111", "active": false },
+  { "slug": "ca-santa-barbara-county", "name": "Santa Barbara County", "kind": "county", "parent": "ca-socal", "fips": "06083", "active": false },
+  { "slug": "ca-san-luis-obispo-county", "name": "San Luis Obispo County", "kind": "county", "parent": "ca-socal", "fips": "06079", "active": false },
+  { "slug": "ca-kern-county", "name": "Kern County", "kind": "county", "parent": "ca-socal", "fips": "06029", "active": false }
+]

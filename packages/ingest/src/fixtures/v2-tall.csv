@@ -1,0 +1,5 @@
+hospital_name,last_updated_on,version,hospital_location,hospital_address,license_number|CA,"To the best of its knowledge and belief, the hospital has included all applicable standard charge information in accordance with the requirements of 45 CFR 180.50, and the information encoded is true, accurate, and complete as of the date indicated."
+Example General Hospital,2025-01-15,2.2.0,Example General Hospital,123 Example Way San Diego CA 92101,000000001,true
+description,code|1,code|1|type,modifiers,setting,drug_unit_of_measurement,drug_type_of_measurement,standard_charge|gross,standard_charge|discounted_cash,payer_name,plan_name,standard_charge|negotiated_dollar,standard_charge|negotiated_percentage,standard_charge|negotiated_algorithm,estimated_amount,standard_charge|methodology,standard_charge|min,standard_charge|max,additional_generic_notes
+HOSPITAL OUTPATIENT CLINIC VISIT,G0463,HCPCS,,outpatient,,,600,360,Aetna,PPO,,55,,310,percent of total billed charges,280,330,
+MRI KNEE WITHOUT CONTRAST,73721,CPT,,outpatient,,,3200,1100,Aetna,PPO,1400,,,,fee schedule,1400,1400,N/A

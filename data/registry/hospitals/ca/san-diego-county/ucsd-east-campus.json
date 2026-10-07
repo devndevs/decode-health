@@ -1,0 +1,17 @@
+{
+  "slug": "ucsd-east-campus",
+  "name": "UC San Diego Health – East Campus Medical Center",
+  "system": "uc-san-diego-health",
+  "region": "ca-san-diego-county",
+  "address": { "line1": "6655 Alvarado Rd", "city": "San Diego", "state": "CA", "zip": "92120" },
+  "identifiers": { "ccn": null, "npi": [], "stateLicense": null, "hcaiId": null },
+  "website": "https://health.ucsd.edu",
+  "financialAssistanceUrl": null,
+  "priceTransparency": {
+    "cmsHptTxtUrl": "https://health.ucsd.edu/cms-hpt.txt",
+    "locationNameMatch": ["East Campus", "Alvarado"],
+    "mrfUrl": null
+  },
+  "verified": false,
+  "notes": "Formerly Alvarado Hospital Medical Center. TODO verify identifiers and the location name used in cms-hpt.txt (it may still be published under the Alvarado name)."
+}

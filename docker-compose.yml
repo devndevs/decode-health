@@ -1,0 +1,20 @@
+# Local development database. Production should use a managed Postgres 16+.
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: decode
+      POSTGRES_PASSWORD: decode
+      POSTGRES_DB: decode_health
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./packages/db/docker/init-roles.sql:/docker-entrypoint-initdb.d/00-roles.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U decode -d decode_health"]
+      interval: 5s
+      retries: 10
+
+volumes:
+  pgdata:
