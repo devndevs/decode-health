@@ -1,0 +1,62 @@
+[
+  {
+    "slug": "vaginal-delivery",
+    "category": "maternity",
+    "benefitCategory": "maternity",
+    "setting": "inpatient",
+    "name": { "en": "Having a baby (vaginal delivery)", "es": "Parto vaginal" },
+    "summary": {
+      "en": "The hospital's charge for an uncomplicated vaginal birth. Doctor, anesthesia (epidural), and newborn care are usually billed separately.",
+      "es": "El cargo del hospital por un parto vaginal sin complicaciones. El médico, la anestesia (epidural) y la atención del bebé normalmente se cobran por separado."
+    },
+    "components": [
+      { "codeType": "MS-DRG", "code": "807", "billingClass": "facility", "label": { "en": "Hospital stay", "es": "Estancia en el hospital" } }
+    ],
+    "keywords": ["birth", "labor", "delivery", "pregnancy", "parto", "embarazo"]
+  },
+  {
+    "slug": "c-section",
+    "category": "maternity",
+    "benefitCategory": "maternity",
+    "setting": "inpatient",
+    "name": { "en": "Having a baby (C-section)", "es": "Cesárea" },
+    "summary": {
+      "en": "The hospital's charge for an uncomplicated cesarean birth. Surgeon, anesthesia, and newborn care are usually billed separately.",
+      "es": "El cargo del hospital por una cesárea sin complicaciones. El cirujano, la anestesia y la atención del bebé normalmente se cobran por separado."
+    },
+    "components": [
+      { "codeType": "MS-DRG", "code": "788", "billingClass": "facility", "label": { "en": "Hospital stay", "es": "Estancia en el hospital" } }
+    ],
+    "keywords": ["cesarean", "c-section", "birth", "cesárea"]
+  },
+  {
+    "slug": "joint-replacement",
+    "category": "hospital_stays",
+    "benefitCategory": "inpatient",
+    "setting": "inpatient",
+    "name": { "en": "Hip or knee replacement", "es": "Reemplazo de cadera o rodilla" },
+    "summary": {
+      "en": "The hospital's charge for a hip or knee replacement without major complications. The surgeon and anesthesia are usually billed separately.",
+      "es": "El cargo del hospital por un reemplazo de cadera o rodilla sin complicaciones graves. El cirujano y la anestesia normalmente se cobran por separado."
+    },
+    "components": [
+      { "codeType": "MS-DRG", "code": "470", "billingClass": "facility", "label": { "en": "Hospital stay", "es": "Estancia en el hospital" } }
+    ],
+    "keywords": ["hip", "knee", "replacement", "cadera", "rodilla"]
+  },
+  {
+    "slug": "emergency-room-visit",
+    "category": "emergency",
+    "benefitCategory": "emergency",
+    "setting": "outpatient",
+    "name": { "en": "Emergency room visit (moderate)", "es": "Visita a la sala de emergencias (moderada)" },
+    "summary": {
+      "en": "A mid-level ER visit, before any tests, scans, or treatment. In an emergency, go to the nearest ER — federal law protects you from surprise out-of-network bills for emergency care.",
+      "es": "Una visita de nivel medio a la sala de emergencias, sin contar pruebas, estudios ni tratamientos. En una emergencia, vaya a la sala de emergencias más cercana: la ley federal lo protege de facturas sorpresa fuera de la red por atención de emergencia."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99284", "billingClass": "any", "label": { "en": "ER visit", "es": "Visita a emergencias" } }
+    ],
+    "keywords": ["er", "emergency", "urgent", "emergencia"]
+  }
+]

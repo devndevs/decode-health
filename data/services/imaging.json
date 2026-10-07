@@ -1,0 +1,92 @@
+[
+  {
+    "slug": "chest-x-ray",
+    "category": "imaging",
+    "benefitCategory": "imaging",
+    "setting": "outpatient",
+    "name": { "en": "Chest X-ray", "es": "Radiografía de tórax" },
+    "summary": {
+      "en": "Two X-ray pictures of the chest. Used for coughs, pneumonia, and checking the heart and lungs.",
+      "es": "Dos radiografías del pecho. Se usan para la tos, la neumonía y para revisar el corazón y los pulmones."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "71046", "billingClass": "any", "label": { "en": "X-ray", "es": "Radiografía" } }
+    ],
+    "keywords": ["xray", "x-ray", "chest", "radiografía", "pecho"]
+  },
+  {
+    "slug": "mri-knee",
+    "category": "imaging",
+    "benefitCategory": "advanced_imaging",
+    "setting": "outpatient",
+    "name": { "en": "MRI of the knee (no contrast)", "es": "Resonancia magnética de la rodilla (sin contraste)" },
+    "summary": {
+      "en": "Detailed images of a knee or other leg joint. Prices vary a lot between hospitals and stand-alone imaging centers — it pays to compare.",
+      "es": "Imágenes detalladas de la rodilla u otra articulación de la pierna. Los precios varían mucho entre hospitales y centros de imágenes independientes; vale la pena comparar."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "73721", "billingClass": "any", "label": { "en": "MRI scan", "es": "Resonancia magnética" } }
+    ],
+    "keywords": ["mri", "knee", "resonancia", "rodilla"]
+  },
+  {
+    "slug": "mri-brain",
+    "category": "imaging",
+    "benefitCategory": "advanced_imaging",
+    "setting": "outpatient",
+    "name": { "en": "MRI of the brain (no contrast)", "es": "Resonancia magnética del cerebro (sin contraste)" },
+    "summary": {
+      "en": "Detailed images of the brain, used for headaches, dizziness, and neurological symptoms.",
+      "es": "Imágenes detalladas del cerebro que se usan para dolores de cabeza, mareos y síntomas neurológicos."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "70551", "billingClass": "any", "label": { "en": "MRI scan", "es": "Resonancia magnética" } }
+    ],
+    "keywords": ["mri", "brain", "head", "resonancia", "cerebro"]
+  },
+  {
+    "slug": "ct-head",
+    "category": "imaging",
+    "benefitCategory": "advanced_imaging",
+    "setting": "outpatient",
+    "name": { "en": "CT scan of the head (no contrast)", "es": "Tomografía de la cabeza (sin contraste)" },
+    "summary": {
+      "en": "A fast scan of the head, often used after a fall or head injury.",
+      "es": "Un estudio rápido de la cabeza que se usa a menudo después de una caída o un golpe en la cabeza."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "70450", "billingClass": "any", "label": { "en": "CT scan", "es": "Tomografía" } }
+    ],
+    "keywords": ["ct", "cat scan", "head", "tomografía", "cabeza"]
+  },
+  {
+    "slug": "ct-abdomen-pelvis",
+    "category": "imaging",
+    "benefitCategory": "advanced_imaging",
+    "setting": "outpatient",
+    "name": { "en": "CT scan of the belly and pelvis (with contrast)", "es": "Tomografía del abdomen y la pelvis (con contraste)" },
+    "summary": {
+      "en": "A scan of the abdomen and pelvis using contrast dye, often for belly pain.",
+      "es": "Un estudio del abdomen y la pelvis con medio de contraste, a menudo por dolor abdominal."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "74177", "billingClass": "any", "label": { "en": "CT scan", "es": "Tomografía" } }
+    ],
+    "keywords": ["ct", "abdomen", "stomach", "tomografía", "abdomen"]
+  },
+  {
+    "slug": "ultrasound-abdomen",
+    "category": "imaging",
+    "benefitCategory": "imaging",
+    "setting": "outpatient",
+    "name": { "en": "Ultrasound of the abdomen", "es": "Ultrasonido del abdomen" },
+    "summary": {
+      "en": "Uses sound waves to look at the liver, gallbladder, kidneys, and other organs.",
+      "es": "Usa ondas de sonido para ver el hígado, la vesícula, los riñones y otros órganos."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "76700", "billingClass": "any", "label": { "en": "Ultrasound", "es": "Ultrasonido" } }
+    ],
+    "keywords": ["ultrasound", "sonogram", "ultrasonido", "ecografía"]
+  }
+]

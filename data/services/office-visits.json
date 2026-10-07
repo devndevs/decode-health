@@ -1,0 +1,66 @@
+[
+  {
+    "slug": "office-visit-established",
+    "category": "office_visits",
+    "benefitCategory": "primary_care",
+    "setting": "outpatient",
+    "name": { "en": "Follow-up office visit", "es": "Consulta de seguimiento en el consultorio" },
+    "summary": {
+      "en": "A typical visit with a doctor you've seen before, about 20–30 minutes. At a hospital-owned clinic you may get two bills: the doctor's fee and a separate hospital facility fee.",
+      "es": "Una consulta típica con un médico que ya lo ha atendido, de unos 20 a 30 minutos. En una clínica que pertenece a un hospital, puede recibir dos facturas: la del médico y un cargo aparte por uso de las instalaciones."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99213", "billingClass": "professional", "label": { "en": "Doctor's fee", "es": "Honorarios del médico" } },
+      { "codeType": "HCPCS", "code": "G0463", "billingClass": "facility", "label": { "en": "Hospital clinic facility fee", "es": "Cargo por instalaciones de la clínica del hospital" } }
+    ],
+    "keywords": ["doctor visit", "checkup", "follow up", "primary care", "consulta", "médico"]
+  },
+  {
+    "slug": "office-visit-established-complex",
+    "category": "office_visits",
+    "benefitCategory": "specialist",
+    "setting": "outpatient",
+    "name": { "en": "Longer follow-up visit (more complex)", "es": "Consulta de seguimiento más larga (más compleja)" },
+    "summary": {
+      "en": "A visit with a doctor you've seen before for a more involved problem, about 30–40 minutes. Common for specialist visits and managing ongoing conditions.",
+      "es": "Una consulta con un médico que ya lo ha atendido por un problema más complicado, de unos 30 a 40 minutos. Es común con especialistas y para condiciones crónicas."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99214", "billingClass": "professional", "label": { "en": "Doctor's fee", "es": "Honorarios del médico" } },
+      { "codeType": "HCPCS", "code": "G0463", "billingClass": "facility", "label": { "en": "Hospital clinic facility fee", "es": "Cargo por instalaciones de la clínica del hospital" } }
+    ],
+    "keywords": ["specialist", "especialista"]
+  },
+  {
+    "slug": "office-visit-new",
+    "category": "office_visits",
+    "benefitCategory": "primary_care",
+    "setting": "outpatient",
+    "name": { "en": "First visit with a new doctor", "es": "Primera consulta con un médico nuevo" },
+    "summary": {
+      "en": "Your first visit with a doctor or practice, about 30–45 minutes. New-patient visits usually cost more than follow-ups.",
+      "es": "Su primera consulta con un médico o consultorio, de unos 30 a 45 minutos. Las consultas de pacientes nuevos suelen costar más que las de seguimiento."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99203", "billingClass": "professional", "label": { "en": "Doctor's fee", "es": "Honorarios del médico" } },
+      { "codeType": "HCPCS", "code": "G0463", "billingClass": "facility", "label": { "en": "Hospital clinic facility fee", "es": "Cargo por instalaciones de la clínica del hospital" } }
+    ],
+    "keywords": ["new patient", "paciente nuevo"]
+  },
+  {
+    "slug": "office-visit-new-complex",
+    "category": "office_visits",
+    "benefitCategory": "specialist",
+    "setting": "outpatient",
+    "name": { "en": "First visit with a specialist (more complex)", "es": "Primera consulta con un especialista (más compleja)" },
+    "summary": {
+      "en": "A longer first visit, about 45–60 minutes, often with a specialist for a new or complicated problem.",
+      "es": "Una primera consulta más larga, de unos 45 a 60 minutos, a menudo con un especialista por un problema nuevo o complicado."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99204", "billingClass": "professional", "label": { "en": "Doctor's fee", "es": "Honorarios del médico" } },
+      { "codeType": "HCPCS", "code": "G0463", "billingClass": "facility", "label": { "en": "Hospital clinic facility fee", "es": "Cargo por instalaciones de la clínica del hospital" } }
+    ],
+    "keywords": ["specialist", "new patient", "especialista"]
+  }
+]

@@ -1,0 +1,77 @@
+[
+  {
+    "slug": "ekg",
+    "category": "procedures",
+    "benefitCategory": "specialist",
+    "setting": "outpatient",
+    "name": { "en": "Heart rhythm test (EKG)", "es": "Electrocardiograma (EKG)" },
+    "summary": {
+      "en": "A quick, painless test that records your heart's electrical activity.",
+      "es": "Una prueba rápida y sin dolor que registra la actividad eléctrica del corazón."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "93000", "billingClass": "any", "label": { "en": "EKG", "es": "Electrocardiograma" } }
+    ],
+    "keywords": ["ecg", "ekg", "heart", "corazón"]
+  },
+  {
+    "slug": "colonoscopy",
+    "category": "procedures",
+    "benefitCategory": "outpatient_surgery",
+    "setting": "outpatient",
+    "name": { "en": "Colonoscopy", "es": "Colonoscopia" },
+    "summary": {
+      "en": "A camera exam of the large intestine. A routine screening colonoscopy is usually free with insurance, but if polyps are removed or it's for symptoms, you may owe a share. Anesthesia is often billed separately.",
+      "es": "Un examen con cámara del intestino grueso. La colonoscopia de detección de rutina suele ser gratis con seguro, pero si le quitan pólipos o se hace por síntomas, podría tener que pagar una parte. La anestesia a menudo se cobra aparte."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "45378", "billingClass": "any", "label": { "en": "Procedure", "es": "Procedimiento" } }
+    ],
+    "keywords": ["colon", "screening", "gi", "colonoscopia"]
+  },
+  {
+    "slug": "knee-arthroscopy",
+    "category": "surgery",
+    "benefitCategory": "outpatient_surgery",
+    "setting": "outpatient",
+    "name": { "en": "Knee arthroscopy (meniscus repair)", "es": "Artroscopia de rodilla (menisco)" },
+    "summary": {
+      "en": "Minimally invasive knee surgery to trim a torn meniscus. Surgeon, anesthesia, and facility are often billed separately.",
+      "es": "Cirugía de rodilla mínimamente invasiva para recortar un menisco roto. El cirujano, la anestesia y las instalaciones a menudo se cobran por separado."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "29881", "billingClass": "any", "label": { "en": "Surgery", "es": "Cirugía" } }
+    ],
+    "keywords": ["knee", "meniscus", "arthroscopy", "rodilla"]
+  },
+  {
+    "slug": "cataract-surgery",
+    "category": "surgery",
+    "benefitCategory": "outpatient_surgery",
+    "setting": "outpatient",
+    "name": { "en": "Cataract surgery", "es": "Cirugía de cataratas" },
+    "summary": {
+      "en": "Removes a cloudy lens and replaces it with an artificial one. Priced per eye.",
+      "es": "Quita el cristalino nublado y lo reemplaza con uno artificial. El precio es por ojo."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "66984", "billingClass": "any", "label": { "en": "Surgery", "es": "Cirugía" } }
+    ],
+    "keywords": ["eye", "cataract", "cataratas", "ojo"]
+  },
+  {
+    "slug": "gallbladder-removal",
+    "category": "surgery",
+    "benefitCategory": "outpatient_surgery",
+    "setting": "outpatient",
+    "name": { "en": "Gallbladder removal (laparoscopic)", "es": "Extirpación de la vesícula (laparoscópica)" },
+    "summary": {
+      "en": "Removes the gallbladder through small incisions. Often done as a same-day surgery.",
+      "es": "Quita la vesícula biliar a través de pequeñas incisiones. A menudo se hace como cirugía ambulatoria."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "47562", "billingClass": "any", "label": { "en": "Surgery", "es": "Cirugía" } }
+    ],
+    "keywords": ["gallbladder", "gallstones", "vesícula"]
+  }
+]

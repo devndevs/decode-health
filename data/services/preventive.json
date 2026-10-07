@@ -1,0 +1,50 @@
+[
+  {
+    "slug": "preventive-visit-18-39",
+    "category": "preventive",
+    "benefitCategory": "preventive",
+    "setting": "outpatient",
+    "acaPreventive": true,
+    "name": { "en": "Yearly checkup (ages 18–39)", "es": "Chequeo anual (de 18 a 39 años)" },
+    "summary": {
+      "en": "A routine preventive visit with a doctor you've seen before. Most plans cover this at no cost in-network. If you bring up a new problem during the visit, you may be billed for a separate office visit.",
+      "es": "Una consulta preventiva de rutina con un médico que ya lo ha atendido. La mayoría de los planes la cubren sin costo dentro de la red. Si menciona un problema nuevo durante la consulta, podrían cobrarle una consulta aparte."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99395", "billingClass": "any", "label": { "en": "Preventive visit", "es": "Consulta preventiva" } }
+    ],
+    "keywords": ["physical", "annual exam", "wellness", "examen físico"]
+  },
+  {
+    "slug": "preventive-visit-40-64",
+    "category": "preventive",
+    "benefitCategory": "preventive",
+    "setting": "outpatient",
+    "acaPreventive": true,
+    "name": { "en": "Yearly checkup (ages 40–64)", "es": "Chequeo anual (de 40 a 64 años)" },
+    "summary": {
+      "en": "A routine preventive visit with a doctor you've seen before. Most plans cover this at no cost in-network.",
+      "es": "Una consulta preventiva de rutina con un médico que ya lo ha atendido. La mayoría de los planes la cubren sin costo dentro de la red."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "99396", "billingClass": "any", "label": { "en": "Preventive visit", "es": "Consulta preventiva" } }
+    ],
+    "keywords": ["physical", "annual exam", "wellness", "examen físico"]
+  },
+  {
+    "slug": "screening-mammogram",
+    "category": "preventive",
+    "benefitCategory": "preventive",
+    "setting": "outpatient",
+    "acaPreventive": true,
+    "name": { "en": "Screening mammogram", "es": "Mamografía de detección" },
+    "summary": {
+      "en": "A routine breast cancer screening when you have no symptoms. Most plans cover it at no cost in-network. A follow-up (diagnostic) mammogram is billed differently and may cost more.",
+      "es": "Una prueba de rutina para detectar cáncer de seno cuando no tiene síntomas. La mayoría de los planes la cubren sin costo dentro de la red. Una mamografía de diagnóstico se factura diferente y puede costar más."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "77067", "billingClass": "any", "label": { "en": "Screening mammogram", "es": "Mamografía de detección" } }
+    ],
+    "keywords": ["breast", "mammography", "seno", "mama"]
+  }
+]

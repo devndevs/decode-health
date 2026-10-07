@@ -1,0 +1,18 @@
+node_modules/
+.next/
+out/
+dist/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Local env — never commit secrets
+.env
+.env.*
+!.env.example
+
+# Downloaded machine-readable files and ingest work dirs (can be many GB)
+.data/
+
+.DS_Store
+*.log

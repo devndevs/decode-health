@@ -1,0 +1,113 @@
+[
+  {
+    "slug": "complete-blood-count",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Complete blood count (CBC)", "es": "Hemograma completo (CBC)" },
+    "summary": {
+      "en": "A common blood test that counts red cells, white cells, and platelets. You'll usually also be charged for the blood draw.",
+      "es": "Un análisis de sangre común que cuenta los glóbulos rojos, los glóbulos blancos y las plaquetas. Normalmente también le cobran la extracción de sangre."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "85025", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["blood test", "cbc", "análisis de sangre"]
+  },
+  {
+    "slug": "comprehensive-metabolic-panel",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Comprehensive metabolic panel (CMP)", "es": "Panel metabólico completo (CMP)" },
+    "summary": {
+      "en": "A blood test that checks blood sugar, kidney and liver function, and electrolytes.",
+      "es": "Un análisis de sangre que revisa el azúcar en la sangre, el funcionamiento de los riñones y el hígado, y los electrolitos."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "80053", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["blood test", "cmp", "metabolic", "análisis de sangre"]
+  },
+  {
+    "slug": "basic-metabolic-panel",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Basic metabolic panel (BMP)", "es": "Panel metabólico básico (BMP)" },
+    "summary": {
+      "en": "A shorter version of the metabolic panel: blood sugar, kidney function, and electrolytes.",
+      "es": "Una versión más corta del panel metabólico: azúcar en la sangre, funcionamiento de los riñones y electrolitos."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "80048", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["blood test", "bmp", "análisis de sangre"]
+  },
+  {
+    "slug": "lipid-panel",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Cholesterol test (lipid panel)", "es": "Prueba de colesterol (perfil lipídico)" },
+    "summary": {
+      "en": "Measures cholesterol and triglycerides. Often part of a yearly checkup.",
+      "es": "Mide el colesterol y los triglicéridos. A menudo es parte del chequeo anual."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "80061", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["cholesterol", "lipids", "colesterol"]
+  },
+  {
+    "slug": "hemoglobin-a1c",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Diabetes blood test (A1C)", "es": "Prueba de diabetes (A1C)" },
+    "summary": {
+      "en": "Shows your average blood sugar over the past few months. Used to screen for and manage diabetes.",
+      "es": "Muestra su nivel promedio de azúcar en la sangre durante los últimos meses. Se usa para detectar y controlar la diabetes."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "83036", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["diabetes", "a1c", "blood sugar", "azúcar"]
+  },
+  {
+    "slug": "thyroid-test",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Thyroid test (TSH)", "es": "Prueba de tiroides (TSH)" },
+    "summary": {
+      "en": "Checks how well your thyroid is working.",
+      "es": "Revisa qué tan bien funciona su tiroides."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "84443", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } },
+      { "codeType": "CPT", "code": "36415", "billingClass": "any", "label": { "en": "Blood draw", "es": "Extracción de sangre" } }
+    ],
+    "keywords": ["thyroid", "tsh", "tiroides"]
+  },
+  {
+    "slug": "urinalysis",
+    "category": "labs",
+    "benefitCategory": "lab",
+    "setting": "outpatient",
+    "name": { "en": "Urine test (urinalysis)", "es": "Análisis de orina" },
+    "summary": {
+      "en": "A routine urine test that can check for infection, kidney problems, and diabetes.",
+      "es": "Un análisis de orina de rutina que puede detectar infecciones, problemas de los riñones y diabetes."
+    },
+    "components": [
+      { "codeType": "CPT", "code": "81003", "billingClass": "any", "label": { "en": "Lab test", "es": "Análisis de laboratorio" } }
+    ],
+    "keywords": ["urine", "ua", "orina"]
+  }
+]

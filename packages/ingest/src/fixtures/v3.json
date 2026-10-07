@@ -1,0 +1,70 @@
+{
+  "hospital_name": "Example General Hospital",
+  "last_updated_on": "2026-07-01",
+  "version": "3.0.0",
+  "location_name": ["Example General Hospital"],
+  "hospital_address": ["123 Example Way, San Diego, CA 92101"],
+  "license_information": { "license_number": "000000001", "state": "CA" },
+  "type_2_npi": ["1234567893"],
+  "standard_charge_information": [
+    {
+      "description": "OFFICE OUTPATIENT VISIT EST LEVEL 3",
+      "code_information": [{ "code": "99213", "type": "CPT" }, { "code": "510", "type": "RC" }],
+      "standard_charges": [
+        {
+          "setting": "outpatient",
+          "gross_charge": 350,
+          "discounted_cash": 210,
+          "minimum": 120,
+          "maximum": 140,
+          "billing_class": "professional",
+          "payers_information": [
+            { "payer_name": "Aetna Life Insurance Co", "plan_name": "Aetna PPO", "standard_charge_dollar": 140, "methodology": "fee schedule" },
+            { "payer_name": "Blue Shield of California", "plan_name": "Trio HMO", "standard_charge_dollar": 120, "methodology": "fee schedule" }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "HOSPITAL OUTPATIENT CLINIC VISIT",
+      "code_information": [{ "code": "G0463", "type": "HCPCS" }],
+      "standard_charges": [
+        {
+          "setting": "outpatient",
+          "gross_charge": 600,
+          "discounted_cash": 360,
+          "billing_class": "facility",
+          "payers_information": [
+            {
+              "payer_name": "Aetna Life Insurance Co",
+              "plan_name": "Aetna PPO",
+              "standard_charge_percentage": 55,
+              "median_amount": 300,
+              "10th_percentile": 250,
+              "90th_percentile": 380,
+              "count": "25",
+              "methodology": "percent of total billed charges",
+              "additional_payer_notes": "Paid at 55% of charges"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "description": "ONDANSETRON 4 MG INJ",
+      "code_information": [{ "code": "J2405", "type": "HCPCS" }, { "code": "00409-4755-03", "type": "NDC" }],
+      "drug_information": { "unit": 1, "type": "UN" },
+      "standard_charges": [
+        { "setting": "both", "gross_charge": 45, "discounted_cash": 12, "modifier_code": ["jw"] }
+      ]
+    }
+  ],
+  "modifier_information": [
+    { "description": "Drug wastage", "code": "JW", "modifier_payer_information": [] }
+  ],
+  "attestation": {
+    "attestation": "To the best of its knowledge and belief, this hospital has included all applicable standard charge information...",
+    "confirm_attestation": true,
+    "attester_name": "Pat Example"
+  }
+}

@@ -1,0 +1,151 @@
+[
+  {
+    "slug": "aetna",
+    "name": "Aetna",
+    "type": "commercial",
+    "aliases": ["Aetna Health", "Aetna Health of California", "Aetna Life Insurance", "Aetna Commercial", "Aetna Inc"],
+    "products": ["hmo", "ppo", "epo", "medicare_advantage"]
+  },
+  {
+    "slug": "anthem-blue-cross",
+    "name": "Anthem Blue Cross",
+    "type": "commercial",
+    "aliases": ["Blue Cross", "Anthem", "Anthem BC", "Anthem Blue Cross of California", "Blue Cross of California", "Anthem Blue Cross Life and Health", "Elevance Health"],
+    "products": ["hmo", "ppo", "epo", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "blue-shield-ca",
+    "name": "Blue Shield of California",
+    "type": "commercial",
+    "aliases": ["Blue Shield", "BSC", "Blue Shield CA", "California Physicians Service"],
+    "products": ["hmo", "ppo", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "blue-shield-promise",
+    "name": "Blue Shield of California Promise Health Plan",
+    "type": "medi_cal",
+    "aliases": ["Blue Shield Promise", "BSC Promise", "Blue Shield of California Promise"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "cigna",
+    "name": "Cigna Healthcare",
+    "type": "commercial",
+    "aliases": ["Cigna", "Cigna Health and Life Insurance", "Connecticut General Life Insurance", "Cigna HealthCare of California"],
+    "products": ["hmo", "ppo", "epo"]
+  },
+  {
+    "slug": "unitedhealthcare",
+    "name": "UnitedHealthcare",
+    "type": "commercial",
+    "aliases": ["United Healthcare", "United Health Care", "UHC", "UnitedHealthcare Insurance", "United HealthCare Services", "UnitedHealthcare of California"],
+    "products": ["hmo", "ppo", "epo", "medicare_advantage"]
+  },
+  {
+    "slug": "health-net",
+    "name": "Health Net",
+    "type": "commercial",
+    "aliases": ["HealthNet", "Health Net of California", "Health Net Life Insurance"],
+    "products": ["hmo", "ppo", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "kaiser-permanente",
+    "name": "Kaiser Permanente",
+    "type": "commercial",
+    "aliases": ["Kaiser", "Kaiser Foundation Health Plan", "KFHP"],
+    "products": ["hmo", "exchange", "medicare_advantage", "medi_cal"]
+  },
+  {
+    "slug": "molina",
+    "name": "Molina Healthcare",
+    "type": "medi_cal",
+    "aliases": ["Molina", "Molina Healthcare of California"],
+    "products": ["medi_cal", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "community-health-group",
+    "name": "Community Health Group",
+    "type": "medi_cal",
+    "aliases": ["Community Health Group Partnership Plan", "CHG", "CHGSD"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "sharp-health-plan",
+    "name": "Sharp Health Plan",
+    "type": "commercial",
+    "aliases": ["Sharp HP"],
+    "products": ["hmo", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "humana",
+    "name": "Humana",
+    "type": "medicare_advantage",
+    "aliases": ["Humana Insurance", "Humana Health Plan"],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "scan",
+    "name": "SCAN Health Plan",
+    "type": "medicare_advantage",
+    "aliases": ["SCAN"],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "inland-empire-health-plan",
+    "name": "Inland Empire Health Plan",
+    "type": "medi_cal",
+    "aliases": ["IEHP"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "la-care",
+    "name": "L.A. Care Health Plan",
+    "type": "medi_cal",
+    "aliases": ["LA Care", "LA Care Health Plan", "L.A. Care"],
+    "products": ["medi_cal", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "caloptima",
+    "name": "CalOptima Health",
+    "type": "medi_cal",
+    "aliases": ["CalOptima", "Cal Optima"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "alignment-health",
+    "name": "Alignment Health Plan",
+    "type": "medicare_advantage",
+    "aliases": ["Alignment Health"],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "brand-new-day",
+    "name": "Brand New Day",
+    "type": "medicare_advantage",
+    "aliases": [],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "tricare",
+    "name": "TRICARE",
+    "type": "military",
+    "aliases": ["TRICARE West", "TRICARE West Region", "TriWest", "TriWest Healthcare Alliance", "Health Net Federal Services"],
+    "products": ["tricare"]
+  },
+  {
+    "slug": "medicare",
+    "name": "Medicare",
+    "type": "medicare",
+    "aliases": ["Original Medicare", "Traditional Medicare", "Medicare Part A", "Medicare Part B", "Medicare Fee for Service", "Medicare FFS", "Noridian"],
+    "prefixMatch": false,
+    "products": ["medicare"]
+  },
+  {
+    "slug": "medi-cal",
+    "name": "Medi-Cal (fee-for-service)",
+    "type": "medi_cal",
+    "aliases": ["Medi-Cal", "Medi-Cal FFS", "MediCal", "California Medicaid", "Medicaid", "DHCS"],
+    "prefixMatch": false,
+    "products": ["medi_cal"]
+  }
+]

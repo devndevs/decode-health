@@ -1,0 +1,24 @@
+{
+  "slug": "ucsd-medical-center",
+  "name": "UC San Diego Health – UC San Diego Medical Center",
+  "system": "uc-san-diego-health",
+  "region": "ca-san-diego-county",
+  "address": { "line1": "200 W Arbor Dr", "city": "San Diego", "state": "CA", "zip": "92103" },
+  "campuses": [
+    { "name": "Hillcrest Medical Center", "address": "200 W Arbor Dr, San Diego, CA 92103" },
+    { "name": "Jacobs Medical Center", "address": "9300 Campus Point Dr, San Diego, CA 92037" },
+    { "name": "Moores Cancer Center", "address": "3855 Health Sciences Dr, San Diego, CA 92037" },
+    { "name": "Sulpizio Cardiovascular Center", "address": "9434 Medical Center Dr, San Diego, CA 92037" },
+    { "name": "East Campus Medical Center", "address": "6655 Alvarado Rd, San Diego, CA 92120" }
+  ],
+  "identifiers": { "ccn": null, "npi": ["1184722779"], "stateLicense": "090000101", "hcaiId": null },
+  "website": "https://health.ucsd.edu",
+  "financialAssistanceUrl": null,
+  "priceTransparency": {
+    "cmsHptTxtUrl": "https://health.ucsd.edu/cms-hpt.txt",
+    "locationNameMatch": ["UC San Diego Medical Center", "Hillcrest", "Jacobs"],
+    "mrfUrls": []
+  },
+  "verified": false,
+  "notes": "One license and one price file (published in 33 parts, CMS template v3.0) cover all five campuses; campus names, addresses, license number, and NPI come from that file (last_updated_on 2026-04-01). TODO verify: CCN, HCAI facility ID, financial assistance URL, and how cms-hpt.txt names the location(s) so locationNameMatch picks up every part and nothing else."
+}
