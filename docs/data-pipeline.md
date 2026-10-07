@@ -13,8 +13,13 @@ website. Each block lists a `location-name`, `source-page-url`, and `mrf-url`.
 We pick the block whose `location-name` contains one of the hospital's
 `locationNameMatch` terms (see `data/registry/hospitals/...`).
 
-If a hospital's txt file is missing or wrong, pin the URL with
-`priceTransparency.mrfUrl` in its registry file.
+Every matching `mrf-url` is treated as one **part** of the hospital's file;
+UC San Diego, for example, splits one file into 33 parts. Parts are downloaded,
+stored, and parsed together and loaded as a single version, so the site never
+shows half of a hospital.
+
+If a hospital's txt file is missing or wrong, pin the URL(s) with
+`priceTransparency.mrfUrls` in its registry file (list every part, in order).
 
 ## 2. Download (`packages/ingest/src/fetch.ts`)
 
@@ -26,7 +31,11 @@ If a hospital's txt file is missing or wrong, pin the URL with
   `raw/<region path>/<hospital>/<date>_<sha12>.<ext>`.
 
 Some hospitals block automated downloads. Download in a browser and run
-`pnpm ingest load-file --hospital <slug> --file <path>`.
+`pnpm ingest load-file --hospital <slug> <file or directory>...`.
+
+Don't commit price files to git. They're gigabytes, every clone downloads them
+forever, and GitHub rejects files over 100 MB. Keep them in `.data/`
+(git-ignored) locally and in object storage in production.
 
 ## 3. Parse (`packages/ingest/src/parsers/`)
 
@@ -38,7 +47,9 @@ Supports every layout the CMS template allows, streaming in constant memory:
 | CSV "wide" | Payer and plan live in column headers: `standard_charge\|Aetna\|PPO\|negotiated_dollar` |
 | JSON | `standard_charge_information` is streamed element by element |
 
-Also handled: gzip and zip archives (largest `.csv`/`.json` entry), UTF-16
+Also handled: multi-part files (each part is a complete file; item ids continue
+across parts and metadata comes from part 1, with a warning if parts disagree),
+"insufficient data" sentinels like `999999999` (treated as missing), gzip and zip archives (largest `.csv`/`.json` entry), UTF-16
 files from Excel, template v2.x (`hospital_location`, `estimated_amount`) and
 v3.0 (`location_name`, `median_amount`, `10th_percentile`, `90th_percentile`,
 `count`), and the usual spec violations (`$1,234.00`, `N/A`, CPT codes

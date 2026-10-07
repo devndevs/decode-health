@@ -1,13 +1,18 @@
 -- One row per distinct version of a hospital's machine-readable file (MRF).
--- Raw bytes live in object storage under storage_key; this is the index + audit trail.
+-- A version may be split into several part files; `parts` lists each one
+-- ({url, storageKey, sha256, sizeBytes, etag, lastModified}) and the columns
+-- below describe the first part. Raw bytes live in object storage; this is the
+-- index + audit trail.
 
 CREATE TABLE mrf_files (
   id                     bigserial PRIMARY KEY,
   hospital_id            int NOT NULL REFERENCES hospitals (id),
   source_url             text NOT NULL,
   storage_key            text NOT NULL,
+  -- SHA-256 of the file, or of the ordered part hashes for multi-part files.
   sha256                 char(64) NOT NULL,
-  size_bytes             bigint NOT NULL,
+  size_bytes             bigint NOT NULL,      -- total across parts
+  parts                  jsonb NOT NULL DEFAULT '[]',
   etag                   text,
   last_modified          text,
   format                 text CHECK (format IN ('csv_tall', 'csv_wide', 'json')),

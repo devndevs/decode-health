@@ -2,8 +2,9 @@
 
 ## Phase 1 — UC San Diego Health (now)
 
-- [ ] Verify the three UCSD registry entries (identifiers, cms-hpt.txt location names)
-- [ ] Load UCSD's real file; map every unmatched payer spelling
+- [ ] Verify the UCSD registry entry (CCN, HCAI ID, cms-hpt.txt location names)
+- [x] Load UCSD's real file (33 parts) end to end
+- [ ] Map the remaining unmatched UCSD payer spellings (`pnpm ingest payers:unmatched`)
 - [ ] Spot-check estimates against UCSD's own patient estimator
 - [ ] Verify every help program entry against official sources
 - [ ] Deploy (website + managed Postgres + scheduled ingest job)

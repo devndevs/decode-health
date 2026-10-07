@@ -100,6 +100,7 @@
     "intro": "Hospitales que seguimos en {region}. Cada uno publica un archivo de precios; mostramos cuándo se actualizó por última vez.",
     "noPrices": "Precios aún no cargados",
     "address": "Dirección",
+    "campuses": "Ubicaciones cubiertas por estos precios",
     "website": "Sitio web",
     "sourceFile": "Página de transparencia de precios del hospital",
     "financialAssistance": "Política de asistencia financiera",

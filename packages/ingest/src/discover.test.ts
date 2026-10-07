@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { parseCmsHptTxt, selectEntry } from "./discover";
+import { parseCmsHptTxt, selectEntries } from "./discover";
 
 const TXT = `location-name: Example Medical Center – Hillcrest
 source-page-url: https://example.org/pricing
@@ -28,12 +28,19 @@ describe("cms-hpt.txt", () => {
   });
 
   it("selects by case-insensitive location substring", () => {
-    expect(selectEntry(parseCmsHptTxt(TXT), ["la jolla"]).mrfUrl).toBe("https://example.org/files/lajolla.json");
+    expect(selectEntries(parseCmsHptTxt(TXT), ["la jolla"]).map((e) => e.mrfUrl)).toEqual(["https://example.org/files/lajolla.json"]);
   });
 
-  it("refuses ambiguous or missing matches", () => {
-    expect(() => selectEntry(parseCmsHptTxt(TXT), ["example medical"])).toThrow(/2 different files/);
-    expect(() => selectEntry(parseCmsHptTxt(TXT), ["nowhere"])).toThrow(/No cms-hpt.txt entry/);
-    expect(() => selectEntry(parseCmsHptTxt(TXT), [])).toThrow();
+  it("returns every matching file as a part, in listed order, without duplicates", () => {
+    const doubled = parseCmsHptTxt(TXT + "\nlocation-name: Example Medical Center – Hillcrest\nmrf-url: https://example.org/files/hillcrest.csv\n");
+    expect(selectEntries(doubled, ["example medical"]).map((e) => e.mrfUrl)).toEqual([
+      "https://example.org/files/hillcrest.csv",
+      "https://example.org/files/lajolla.json",
+    ]);
+  });
+
+  it("refuses missing matches", () => {
+    expect(() => selectEntries(parseCmsHptTxt(TXT), ["nowhere"])).toThrow(/No cms-hpt.txt entry/);
+    expect(() => selectEntries(parseCmsHptTxt(TXT), [])).toThrow();
   });
 });

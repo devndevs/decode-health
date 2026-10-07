@@ -33,4 +33,17 @@ describe("writeWorkDir", () => {
     const plans = JSON.parse(await readFile(path.join(dir, PAYER_PLANS_FILE), "utf8"));
     expect(plans).toContainEqual([1, "Aetna Life Insurance Co", "Aetna PPO"]);
   });
+
+  it("writes several parts into one work dir with continuous item ids", async () => {
+    const out = path.join(dir, "multi");
+    const manifest = await writeWorkDir([() => parseMrfFile(fixture("v3-tall.csv")), () => parseMrfFile(fixture("v3.json"))], out);
+    expect(manifest.stats).toMatchObject({ items: 11, rates: 16 });
+    expect(manifest.meta.format).toBe("csv_tall"); // metadata from the first part
+    const ids = (await readFile(path.join(out, WORK_FILES.items.file), "utf8"))
+      .trim()
+      .split("\n")
+      .slice(1)
+      .map((l) => Number(l.split(",")[0]));
+    expect(ids).toEqual(Array.from({ length: 11 }, (_, i) => i + 1));
+  });
 });

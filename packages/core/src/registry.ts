@@ -61,6 +61,8 @@ export const HospitalSchema = z.object({
     zip: z.string().regex(/^\d{5}$/),
   }),
   location: z.object({ lat: z.number(), lng: z.number() }).optional(),
+  /** Campuses covered by this license's price file (one file can cover several buildings). */
+  campuses: z.array(z.object({ name: z.string().min(1), address: z.string().min(1) })).default([]),
   identifiers: z.object({
     /** CMS Certification Number (6 chars). */
     ccn: z.string().regex(/^[0-9A-Z]{6}$/).nullable(),
@@ -78,8 +80,11 @@ export const HospitalSchema = z.object({
     cmsHptTxtUrl: httpsUrl.nullable(),
     /** Case-insensitive substrings matched against `location-name` in cms-hpt.txt. */
     locationNameMatch: z.array(z.string().min(1)).default([]),
-    /** Pin a file URL here to skip discovery (e.g. when cms-hpt.txt is missing or wrong). */
-    mrfUrl: httpsUrl.nullable(),
+    /**
+     * Pin file URL(s) here to skip discovery (e.g. when cms-hpt.txt is missing or wrong).
+     * List every part when a hospital splits its file; parts are loaded together as one version.
+     */
+    mrfUrls: z.array(httpsUrl).default([]),
     sourcePageUrl: httpsUrl.nullable().default(null),
   }),
   /** Set true once a human has checked the identifiers, address, and file URL. */

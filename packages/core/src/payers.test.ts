@@ -14,6 +14,12 @@ describe("normalizeName", () => {
     expect(normalizeName("Blue Shield of California, Inc")).toBe("blue shield of california");
     expect(normalizeName("Medi-Cal")).toBe("medi cal");
   });
+
+  it("drops bracketed numeric contract IDs", () => {
+    expect(normalizeName("MEDICARE [2007]")).toBe("medicare");
+    expect(normalizeName("AETNA TRANSPLANTS [1112]")).toBe("aetna transplants");
+    expect(normalizeName("Plan [Gold]")).toBe("plan gold");
+  });
 });
 
 describe("matchPayer", () => {

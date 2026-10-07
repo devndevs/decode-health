@@ -78,7 +78,7 @@ describe.skipIf(!ADMIN_URL)("ingest → database → estimate", () => {
     ).rows.map((r) => r.part);
 
   it("loads a file and produces plan-level estimates", async () => {
-    const r = await ingestLocalFile(ctx, await target(), fixture("v3-tall.csv"));
+    const r = await ingestLocalFile(ctx, await target(), [fixture("v3-tall.csv")]);
     expect(r.status).toBe("loaded");
 
     const service = await getService(pool, "office-visit-established");
@@ -108,12 +108,41 @@ describe.skipIf(!ADMIN_URL)("ingest → database → estimate", () => {
   });
 
   it("swaps in a new file version without leaving old partitions behind", async () => {
-    await ingestLocalFile(ctx, await target(), fixture("v3-wide.csv"));
+    await ingestLocalFile(ctx, await target(), [fixture("v3-wide.csv")]);
     const parts = await partitions();
     expect(parts).toHaveLength(3);
-    expect(parts.every((p) => p.endsWith(`_h${hospitalId}_f2`))).toBe(true);
+    expect(parts.every((p) => p.includes(`_h${hospitalId}_f2_`))).toBe(true);
     const { rows } = await pool.query("SELECT status FROM mrf_files WHERE hospital_id = $1 ORDER BY id", [hospitalId]);
     expect(rows.map((r) => r.status)).toEqual(["superseded", "loaded"]);
+  });
+
+  it("loads a multi-part file as one version, and skips it when nothing changed", async () => {
+    const parts = [fixture("v3-tall.csv"), fixture("v3-wide.csv")];
+    const first = await ingestLocalFile(ctx, await target(), parts);
+    expect(first.status).toBe("loaded");
+    const { rows } = await pool.query<{ parts: unknown[]; status: string }>(
+      "SELECT parts, status FROM mrf_files WHERE hospital_id = $1 ORDER BY id DESC LIMIT 1",
+      [hospitalId],
+    );
+    expect(rows[0]).toMatchObject({ status: "loaded" });
+    expect(rows[0]!.parts).toHaveLength(2);
+    const { rows: items } = await pool.query("SELECT count(*)::int AS n FROM charge_items WHERE hospital_id = $1", [hospitalId]);
+    // 8 items in the tall part + 4 in the wide part, minus 2 that are identical in both
+    // (same codes, prices, setting) and merge into one item carrying both parts' rates.
+    expect(items[0].n).toBe(10);
+
+    const again = await ingestLocalFile(ctx, await target(), parts);
+    expect(again).toEqual({ status: "unchanged", reason: "same content as the loaded file" });
+
+    // Forcing a reload of the attached version must swap, not drop, the live partitions.
+    const before = await partitions();
+    const forced = await ingestLocalFile(ctx, await target(), parts, { force: true });
+    expect(forced.status).toBe("loaded");
+    const after = await partitions();
+    expect(after).toHaveLength(3);
+    expect(after.some((p) => before.includes(p))).toBe(false);
+    const { rows: still } = await pool.query("SELECT count(*)::int AS n FROM charge_items WHERE hospital_id = $1", [hospitalId]);
+    expect(still[0].n).toBe(10);
   });
 
   it("removes a hospital and all of its data", async () => {

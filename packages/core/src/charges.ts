@@ -52,21 +52,36 @@ export interface EffectiveAmount {
 }
 
 /**
+ * A negotiated rate below this share of the item's own list price is treated as
+ * a data error, not a price. Real example: UC San Diego lists a $0.67 "fee
+ * schedule rate" for a hospital delivery whose list price is $26,000. Raw values
+ * are still stored; they just don't feed comparisons or estimates.
+ */
+export const MIN_SHARE_OF_GROSS = 0.01;
+
+/**
  * Collapse the many ways a hospital can express a price into one dollar figure
  * we can compare, plus a record of how we got it. Order is most to least direct.
+ *
+ * Per-diem rates are a price per day, so they can't be compared with whole-stay
+ * prices without knowing the length of stay; only their historical allowed
+ * amounts (which are per claim) are used.
  */
 export function effectiveAmount(rate: NormalizedRate, item: Pick<NormalizedItem, "gross">): EffectiveAmount | null {
-  if (rate.negotiatedDollar != null) return { amount: rate.negotiatedDollar, basis: "negotiated_dollar" };
-  if (rate.medianAllowed != null) return { amount: rate.medianAllowed, basis: "median_allowed" };
-  if (rate.estimatedAmount != null) return { amount: rate.estimatedAmount, basis: "estimated_amount" };
-  if (
-    rate.negotiatedPercentage != null &&
-    item.gross != null &&
-    rate.methodology === "percent of total billed charges"
-  ) {
-    return { amount: round2((item.gross * rate.negotiatedPercentage) / 100), basis: "percent_of_gross" };
-  }
-  return null;
+  const candidate = ((): EffectiveAmount | null => {
+    if (rate.methodology === "per diem") {
+      return rate.medianAllowed != null ? { amount: rate.medianAllowed, basis: "median_allowed" } : null;
+    }
+    if (rate.negotiatedDollar != null) return { amount: rate.negotiatedDollar, basis: "negotiated_dollar" };
+    if (rate.medianAllowed != null) return { amount: rate.medianAllowed, basis: "median_allowed" };
+    if (rate.estimatedAmount != null) return { amount: rate.estimatedAmount, basis: "estimated_amount" };
+    if (rate.negotiatedPercentage != null && item.gross != null && rate.methodology === "percent of total billed charges") {
+      return { amount: round2((item.gross * rate.negotiatedPercentage) / 100), basis: "percent_of_gross" };
+    }
+    return null;
+  })();
+  if (candidate && item.gross != null && candidate.amount < item.gross * MIN_SHARE_OF_GROSS) return null;
+  return candidate;
 }
 
 // ---------------------------------------------------------------------------
@@ -82,13 +97,19 @@ export function cleanText(raw: unknown): string | null {
   return NULLISH.has(s.toLowerCase()) ? null : s;
 }
 
-/** Parse a positive dollar amount. Zero and negatives are invalid per the CMS spec and treated as missing. */
+/**
+ * Some hospitals write all nines (999999999, 9999999.99, ...) to mean "insufficient
+ * data" — UC San Diego's file says so in its notes. Match the pattern exactly rather
+ * than using a dollar cutoff: gene therapies legitimately carry multi-million charges.
+ */
+export function isSentinelAmount(n: number): boolean {
+  return /^9{7,}(\.(9+|0+))?$/.test(String(n));
+}
+
+/** Parse a positive dollar amount. Zero, negatives, and "insufficient data" sentinels are treated as missing. */
 export function parseAmount(raw: unknown): number | null {
-  if (typeof raw === "number") return Number.isFinite(raw) && raw > 0 ? raw : null;
-  const s = cleanText(raw);
-  if (s == null) return null;
-  const n = Number(s.replace(/[$,\s]/g, ""));
-  return Number.isFinite(n) && n > 0 ? n : null;
+  const n = typeof raw === "number" ? raw : Number(cleanText(raw)?.replace(/[$,\s]/g, "") ?? NaN);
+  return Number.isFinite(n) && n > 0 && !isSentinelAmount(n) ? n : null;
 }
 
 /** Parse a percentage. Accepts "85", "85%", "85.5". */

@@ -1,5 +1,5 @@
 -- The big tables. Every one is LIST-partitioned by hospital_id, one partition
--- per hospital, named <table>_h<hospital_id>_f<mrf_file_id>.
+-- per hospital, named <table>_h<hospital_id>_f<mrf_file_id>_<load tag>.
 --
 -- Why: a hospital's file is replaced wholesale when they publish a new one.
 -- The loader builds the new partition off to the side (COPY, index, ANALYZE),

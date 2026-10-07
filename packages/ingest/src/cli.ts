@@ -6,11 +6,11 @@
  * Commands
  *   registry:check                     Validate everything in /data (no database needed)
  *   registry:sync                      Upsert /data into Postgres
- *   validate <file> [--out <dir>]      Parse a hospital file offline and print a report
+ *   validate <file|dir>... [--out <dir>]  Parse a hospital file (all parts) offline and print a report
  *   discover  [--hospital s|--region s] Find file URLs from each hospital's cms-hpt.txt
  *   run       [--hospital s|--region s] Discover → download → parse → load → summarize
  *             [--force] [--rediscover] [--keep-work] [--concurrency n]
- *   load-file --hospital s --file <path> Ingest a file you downloaded by hand
+ *   load-file --hospital s <file|dir>... Ingest file(s) you downloaded by hand; a directory = all its parts
  *   summarize [--hospital s|--region s] Rebuild price summaries
  *   payers:unmatched [--limit n]        Payer/plan spellings that need an alias
  *   payers:rematch                      Re-run payer matching after editing aliases
@@ -18,6 +18,7 @@
  *   hospital:remove --hospital s --yes  Delete a hospital and all of its price data
  *   demo:seed                           Load synthetic fixtures as a fake "Sample Hospital" (dev only)
  */
+import { readdir, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -39,7 +40,7 @@ const { positionals, values: args } = parseArgs({
   options: {
     hospital: { type: "string" },
     region: { type: "string" },
-    file: { type: "string" },
+    file: { type: "string", multiple: true },
     out: { type: "string" },
     limit: { type: "string" },
     concurrency: { type: "string" },
@@ -74,6 +75,22 @@ async function targets(pool: Pool): Promise<HospitalIngestTarget[]> {
   const list = await ingestTargets(pool, { hospital: args.hospital, region: args.region });
   if (!list.length) throw new Error("No hospitals matched. Did you run `pnpm ingest registry:sync`?");
   return list;
+}
+
+/**
+ * Files from positionals and --file. A directory expands to its data files in
+ * natural order (part-2 before part-10), which is how multi-part files are passed.
+ */
+async function inputFiles(): Promise<string[]> {
+  const out: string[] = [];
+  for (const p of [...rest, ...(args.file ?? [])].map((f) => path.resolve(f))) {
+    if ((await stat(p)).isDirectory()) {
+      const names = (await readdir(p)).filter((n) => /\.(csv|json|zip|gz)$/i.test(n));
+      names.sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+      out.push(...names.map((n) => path.join(p, n)));
+    } else out.push(p);
+  }
+  return out;
 }
 
 /** Run `fn` over items with bounded concurrency; collect failures instead of stopping. */
@@ -127,11 +144,18 @@ const commands: Record<string, () => Promise<void>> = {
   },
 
   async validate() {
-    const file = rest[0] ?? args.file;
-    if (!file) throw new Error("Usage: pnpm ingest validate <file> [--out <dir>]");
-    const out = args.out ?? path.join(DATA_DIR, "validate", path.basename(file).replace(/\W+/g, "_"));
+    const files = await inputFiles();
+    if (!files.length) throw new Error("Usage: pnpm ingest validate <file|dir>... [--out <dir>]");
+    const out = args.out ?? path.join(DATA_DIR, "validate", path.basename(files[0]!).replace(/\W+/g, "_"));
     const started = Date.now();
-    const manifest = await writeWorkDir(await parseMrfFile(path.resolve(file)), out, (n) => log(`${n.toLocaleString()} rows…`));
+    const manifest = await writeWorkDir(
+      files.map((f) => () => {
+        if (files.length > 1) log(`parsing ${path.basename(f)}`);
+        return parseMrfFile(f);
+      }),
+      out,
+      (n) => log(`${n.toLocaleString()} rows…`),
+    );
     console.log(JSON.stringify(manifest, null, 2));
     log(`Parsed in ${((Date.now() - started) / 1000).toFixed(1)}s. Work files: ${out}`);
   },
@@ -140,7 +164,7 @@ const commands: Record<string, () => Promise<void>> = {
     await withPool(async (pool) => {
       const ctx = context(pool);
       const failures = await each(await targets(pool), 4, async (h) => {
-        if (h.mrf_url_pinned) return log(`${h.slug}: pinned to ${h.mrf_url_pinned}`);
+        if (h.mrf_urls_pinned.length) return log(`${h.slug}: pinned to ${h.mrf_urls_pinned.length} file(s)`);
         await discoverHospital(ctx, h);
       });
       for (const f of failures) console.error(`✗ ${f.item.slug}: ${f.error.message}`);
@@ -165,11 +189,13 @@ const commands: Record<string, () => Promise<void>> = {
   },
 
   async "load-file"() {
-    if (!args.hospital || !args.file) throw new Error("Usage: pnpm ingest load-file --hospital <slug> --file <path>");
+    const files = await inputFiles();
+    if (!args.hospital || !files.length) throw new Error("Usage: pnpm ingest load-file --hospital <slug> <file|dir>...");
     await withPool(async (pool) => {
       const [h] = await targets(pool);
-      const r = await ingestLocalFile(context(pool), h!, path.resolve(args.file!), { keepWork: args["keep-work"] });
-      log(`✓ ${h!.slug}: ${r.status}`);
+      const r = await ingestLocalFile(context(pool), h!, files, { keepWork: args["keep-work"], force: args.force });
+      log(`✓ ${h!.slug}: ${r.status}${r.status === "unchanged" ? ` (${r.reason})` : ""}`);
+      if (r.status === "loaded") for (const w of r.warnings) log(`  ⚠ ${w}`);
     });
   },
 
@@ -236,7 +262,7 @@ const commands: Record<string, () => Promise<void>> = {
       const [h] = await ingestTargets(pool, { hospital: "sample-hospital-demo" });
       if (!h) throw new Error("Run `pnpm ingest registry:sync` first so the San Diego region exists");
       const fixture = fileURLToPath(new URL("./fixtures/v3-tall.csv", import.meta.url));
-      await ingestLocalFile(context(pool), h, fixture, { sourceUrl: "fixture://v3-tall.csv" });
+      await ingestLocalFile(context(pool), h, [fixture], { sourceUrl: "fixture://v3-tall.csv", force: true });
       log("✓ Loaded synthetic fixture as 'Sample Hospital'. Remove with: pnpm ingest hospital:remove --hospital sample-hospital-demo --yes");
     });
   },

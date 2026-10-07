@@ -21,8 +21,15 @@ pnpm install
 cp .env.example .env
 pnpm db:up                         # local Postgres in Docker
 pnpm ingest registry:sync          # migrate + load hospitals, payers, services from /data
-pnpm ingest run --hospital ucsd-hillcrest   # discover, download, parse, load UCSD's real file
+pnpm ingest run --hospital ucsd-medical-center   # discover, download, parse, load UCSD's real file
 pnpm dev                           # http://localhost:3000
+```
+
+Already have UC San Diego's file on disk (it's published in 33 parts)? Load
+all the parts as one version:
+
+```bash
+pnpm ingest load-file --hospital ucsd-medical-center path/to/UC-San-Diego-Standard-Charges-*.json
 ```
 
 No network access to the hospital, or just want to click around? Load the
@@ -65,7 +72,7 @@ JSON edit that `pnpm ingest registry:check` validates.
 | `pnpm ingest registry:sync` | Migrate, then upsert `/data` into Postgres |
 | `pnpm ingest run --region ca-san-diego-county` | Refresh every hospital in a region |
 | `pnpm ingest validate <file>` | Parse a hospital file offline and print a report |
-| `pnpm ingest load-file --hospital <slug> --file <path>` | Ingest a file you downloaded by hand |
+| `pnpm ingest load-file --hospital <slug> <files or dir>` | Ingest file(s) you downloaded by hand (all parts of a split file) |
 | `pnpm ingest payers:unmatched` | Insurer spellings that still need an alias |
 | `pnpm ingest status` | What's loaded and how fresh it is |
 

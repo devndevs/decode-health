@@ -100,6 +100,7 @@
     "intro": "Hospitals we track in {region}. Each one publishes a price file; we show when it was last updated.",
     "noPrices": "Prices not loaded yet",
     "address": "Address",
+    "campuses": "Locations covered by these prices",
     "website": "Website",
     "sourceFile": "Hospital's price transparency page",
     "financialAssistance": "Financial assistance policy",

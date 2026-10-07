@@ -1,6 +1,17 @@
 /** Bookkeeping for mrf_files: one row per distinct version of a hospital's price file. */
+import { createHash } from "node:crypto";
 import type { Pool } from "./client";
 import type { WorkDirManifest } from "./work-files";
+
+/** One part of a (possibly multi-part) hospital file version. */
+export interface MrfPart {
+  url: string;
+  storageKey: string;
+  sha256: string;
+  sizeBytes: number;
+  etag: string | null;
+  lastModified: string | null;
+}
 
 export interface MrfFileRow {
   id: number;
@@ -9,6 +20,7 @@ export interface MrfFileRow {
   storage_key: string;
   sha256: string;
   size_bytes: number;
+  parts: MrfPart[];
   etag: string | null;
   last_modified: string | null;
   status: "fetched" | "parsed" | "loaded" | "superseded" | "failed";
@@ -22,8 +34,8 @@ export interface HospitalIngestTarget {
   region_path: string;
   cms_hpt_txt_url: string | null;
   location_name_match: string[];
-  mrf_url_pinned: string | null;
-  mrf_url_discovered: string | null;
+  mrf_urls_pinned: string[];
+  mrf_urls_discovered: string[];
   current_mrf_file_id: number | null;
 }
 
@@ -31,7 +43,7 @@ export interface HospitalIngestTarget {
 export async function ingestTargets(pool: Pool, sel: { hospital?: string; region?: string }): Promise<HospitalIngestTarget[]> {
   const { rows } = await pool.query<HospitalIngestTarget>(
     `SELECT h.id, h.slug, h.name, r.path AS region_path, h.cms_hpt_txt_url, h.location_name_match,
-            h.mrf_url_pinned, h.mrf_url_discovered, h.current_mrf_file_id
+            h.mrf_urls_pinned, h.mrf_urls_discovered, h.current_mrf_file_id
      FROM hospitals h
      JOIN regions r ON r.id = h.region_id
      WHERE ($1::text IS NULL OR h.slug = $1)
@@ -43,11 +55,11 @@ export async function ingestTargets(pool: Pool, sel: { hospital?: string; region
   return rows;
 }
 
-export async function setDiscoveredUrl(pool: Pool, hospitalId: number, mrfUrl: string, sourcePageUrl: string | null) {
+export async function setDiscoveredUrls(pool: Pool, hospitalId: number, mrfUrls: string[], sourcePageUrl: string | null) {
   await pool.query(
-    `UPDATE hospitals SET mrf_url_discovered = $2, source_page_url = COALESCE($3, source_page_url),
+    `UPDATE hospitals SET mrf_urls_discovered = $2, source_page_url = COALESCE($3, source_page_url),
        discovered_at = now(), updated_at = now() WHERE id = $1`,
-    [hospitalId, mrfUrl, sourcePageUrl],
+    [hospitalId, mrfUrls, sourcePageUrl],
   );
 }
 
@@ -59,22 +71,40 @@ export async function latestMrfFile(pool: Pool, hospitalId: number): Promise<Mrf
   return rows[0] ?? null;
 }
 
-/** Record a downloaded file. Same bytes as a file we already have → returns the existing row. */
+/** Identity of a multi-part version: hash of the ordered part hashes (a single part keeps its own hash). */
+export function versionHash(parts: Array<Pick<MrfPart, "sha256">>): string {
+  if (parts.length === 1) return parts[0]!.sha256;
+  return createHash("sha256").update(parts.map((p) => p.sha256).join("\n")).digest("hex");
+}
+
+/** Record a downloaded file version. Same bytes as a version we already have → returns the existing row. */
 export async function recordMrfFile(
   pool: Pool,
-  f: { hospitalId: number; sourceUrl: string; storageKey: string; sha256: string; sizeBytes: number; etag: string | null; lastModified: string | null },
+  f: { hospitalId: number; parts: MrfPart[] },
 ): Promise<{ row: MrfFileRow; isNew: boolean }> {
+  if (!f.parts.length) throw new Error("recordMrfFile needs at least one part");
+  const first = f.parts[0]!;
+  const sha256 = versionHash(f.parts);
   const inserted = await pool.query<MrfFileRow>(
-    `INSERT INTO mrf_files (hospital_id, source_url, storage_key, sha256, size_bytes, etag, last_modified)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)
+    `INSERT INTO mrf_files (hospital_id, source_url, storage_key, sha256, size_bytes, parts, etag, last_modified)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
      ON CONFLICT (hospital_id, sha256) DO NOTHING
      RETURNING *`,
-    [f.hospitalId, f.sourceUrl, f.storageKey, f.sha256, f.sizeBytes, f.etag, f.lastModified],
+    [
+      f.hospitalId,
+      first.url,
+      first.storageKey,
+      sha256,
+      f.parts.reduce((n, p) => n + p.sizeBytes, 0),
+      JSON.stringify(f.parts),
+      first.etag,
+      first.lastModified,
+    ],
   );
   if (inserted.rows[0]) return { row: inserted.rows[0], isNew: true };
   const { rows } = await pool.query<MrfFileRow>("SELECT * FROM mrf_files WHERE hospital_id = $1 AND sha256 = $2", [
     f.hospitalId,
-    f.sha256,
+    sha256,
   ]);
   return { row: rows[0]!, isNew: false };
 }

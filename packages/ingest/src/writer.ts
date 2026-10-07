@@ -164,13 +164,42 @@ export class WorkDirWriter {
   }
 }
 
-/** Drain a ParseResult into a work directory. */
-export async function writeWorkDir(result: ParseResult, dir: string, onProgress?: (rows: number) => void): Promise<WorkDirManifest> {
+/**
+ * Drain one or more ParseResults into a single work directory. Multi-part files
+ * (one hospital's prices split across several files) become one version: item
+ * ids keep counting across parts, and metadata comes from the first part.
+ * Parts are opened lazily, one at a time.
+ */
+export async function writeWorkDir(
+  input: ParseResult | Array<() => Promise<ParseResult>>,
+  dir: string,
+  onProgress?: (rows: number) => void,
+): Promise<WorkDirManifest> {
+  const parts = Array.isArray(input) ? input : [async () => input];
   const w = new WorkDirWriter(dir);
   await w.open();
-  for await (const { item, rates } of result.records) {
-    await w.add(item, rates);
-    if (onProgress && w.stats.rowsRead % 250_000 === 0) onProgress(w.stats.rowsRead);
+  let meta: FileMeta | null = null;
+  const warnings: string[] = [];
+  for (const [i, open] of parts.entries()) {
+    const result = await open();
+    for await (const { item, rates } of result.records) {
+      await w.add(item, rates);
+      if (onProgress && w.stats.rowsRead % 250_000 === 0) onProgress(w.stats.rowsRead);
+    }
+    const prefix = parts.length > 1 ? `part ${i + 1}: ` : "";
+    warnings.push(...result.warnings.map((x) => prefix + x));
+    if (!meta) meta = result.meta;
+    else {
+      if (result.meta.hospitalName !== meta.hospitalName || result.meta.lastUpdatedOn !== meta.lastUpdatedOn) {
+        warnings.push(
+          `${prefix}hospital/date "${result.meta.hospitalName} ${result.meta.lastUpdatedOn}" differs from part 1 ` +
+            `"${meta.hospitalName} ${meta.lastUpdatedOn}" — are these really parts of the same file?`,
+        );
+      }
+      meta.locationNames = [...new Set([...meta.locationNames, ...result.meta.locationNames])];
+      meta.addresses = [...new Set([...meta.addresses, ...result.meta.addresses])];
+    }
   }
-  return w.close(result.meta, result.warnings);
+  if (!meta) throw new Error("writeWorkDir needs at least one part");
+  return w.close(meta, warnings);
 }

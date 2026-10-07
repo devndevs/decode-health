@@ -35,8 +35,13 @@ import { PAYER_PLANS_FILE, WORK_FILES, type PayerPlanEntry } from "./work-files"
 const FACT_TABLES = ["charge_items", "charge_item_codes", "charge_rates"] as const;
 type FactTable = (typeof FACT_TABLES)[number];
 
-export function partitionName(table: FactTable, hospitalId: number, mrfFileId: number): string {
-  return `${table}_h${hospitalId}_f${mrfFileId}`;
+/**
+ * <table>_h<hospital>_f<file>_<load tag>. The tag makes every load's staging
+ * tables unique, so re-loading the version that's currently attached (--force)
+ * builds alongside it instead of clobbering it.
+ */
+export function partitionName(table: FactTable, hospitalId: number, mrfFileId: number, loadTag: string): string {
+  return `${table}_h${hospitalId}_f${mrfFileId}_${loadTag}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -226,7 +231,11 @@ export async function loadWorkDir(
   const log = opts.log ?? (() => {});
   if (!Number.isInteger(hospitalId) || !Number.isInteger(mrfFileId)) throw new Error("hospitalId and mrfFileId must be integers");
   const started = Date.now();
-  const staged = Object.fromEntries(FACT_TABLES.map((t) => [t, partitionName(t, hospitalId, mrfFileId)])) as Record<FactTable, string>;
+  const loadTag = Date.now().toString(36);
+  const staged = Object.fromEntries(FACT_TABLES.map((t) => [t, partitionName(t, hospitalId, mrfFileId, loadTag)])) as Record<
+    FactTable,
+    string
+  >;
 
   const c = await pool.connect();
   try {

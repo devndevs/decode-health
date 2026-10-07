@@ -25,28 +25,59 @@ interface SummaryRow extends AmountStats {
   product_type: string;
 }
 
-const SETTING_SCORE: Record<string, number> = { both: 1, unknown: 0 };
-const CLASS_SCORE: Record<string, number> = { both: 1, unknown: 0 };
-
+/**
+ * How well a summary row fits what we're pricing. "both" fits as well as an
+ * exact match (it explicitly covers it); "unknown" (hospital didn't say) fits less.
+ */
 function specificity(row: SummaryRow, setting: string, billingClass: ComponentSpec["billingClass"]): number {
-  const s = row.setting === setting ? 2 : (SETTING_SCORE[row.setting] ?? -1);
-  const b = billingClass === "any" ? 0 : row.billing_class === billingClass ? 2 : (CLASS_SCORE[row.billing_class] ?? -1);
-  return s * 10 + b;
+  const s = row.setting === setting || row.setting === "both" ? 2 : row.setting === "unknown" ? 1 : -1;
+  const b =
+    billingClass === "any" || row.billing_class === billingClass || row.billing_class === "both"
+      ? 2
+      : row.billing_class === "unknown"
+        ? 1
+        : -1;
+  return s < 0 || b < 0 ? -1 : s * 10 + b;
 }
 
-/** Pick the single most specific summary row; ties go to the row backed by more rates. */
+/**
+ * Combine stats from several rows into one honest range. Hospitals sometimes list
+ * the same code more than once at very different prices (UC San Diego has two
+ * blood-draw items: $16.50 and $493 cash); rather than silently picking one, the
+ * range spans both. Quartiles are bounded (min of p25s, max of p75s) and the
+ * median is n-weighted — an approximation, since the raw rates aren't re-read.
+ */
+export function mergeStats(rows: AmountStats[]): AmountStats | null {
+  if (!rows.length) return null;
+  if (rows.length === 1) {
+    const { n, min, p25, median, p75, max } = rows[0]!;
+    return { n, min, p25, median, p75, max };
+  }
+  const n = rows.reduce((a, r) => a + r.n, 0);
+  return {
+    n,
+    min: Math.min(...rows.map((r) => r.min)),
+    p25: Math.min(...rows.map((r) => r.p25)),
+    median: Math.round((rows.reduce((a, r) => a + r.median * r.n, 0) / n) * 100) / 100,
+    p75: Math.max(...rows.map((r) => r.p75)),
+    max: Math.max(...rows.map((r) => r.max)),
+  };
+}
+
+/** Merge all rows tied for the best fit. */
 function best(rows: SummaryRow[], setting: string, billingClass: ComponentSpec["billingClass"]): AmountStats | null {
-  let pick: SummaryRow | null = null;
-  let pickScore = -Infinity;
+  let top = -1;
+  let picked: SummaryRow[] = [];
   for (const r of rows) {
     const score = specificity(r, setting, billingClass);
-    if (score < 0) continue;
-    if (score > pickScore || (score === pickScore && pick && r.n > pick.n)) {
-      pick = r;
-      pickScore = score;
+    if (score < 0 || score < top) continue;
+    if (score > top) {
+      top = score;
+      picked = [];
     }
+    picked.push(r);
   }
-  return pick ? { n: pick.n, min: pick.min, p25: pick.p25, median: pick.median, p75: pick.p75, max: pick.max } : null;
+  return mergeStats(picked);
 }
 
 export async function componentPricing(

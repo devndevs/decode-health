@@ -41,10 +41,13 @@ CREATE TABLE hospitals (
   website                   text NOT NULL,
   phone                     text,
   financial_assistance_url  text,
+  -- Campuses covered by this license's price file: [{"name": ..., "address": ...}]
+  campuses                  jsonb NOT NULL DEFAULT '[]',
   cms_hpt_txt_url           text,
   location_name_match       text[] NOT NULL DEFAULT '{}',
-  mrf_url_pinned            text,
-  mrf_url_discovered        text,
+  -- A hospital's file may be split into parts (UC San Diego publishes 33).
+  mrf_urls_pinned           text[] NOT NULL DEFAULT '{}',
+  mrf_urls_discovered       text[] NOT NULL DEFAULT '{}',
   source_page_url           text,
   discovered_at             timestamptz,
   verified                  boolean NOT NULL DEFAULT false,

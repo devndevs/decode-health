@@ -10,7 +10,7 @@
     "slug": "anthem-blue-cross",
     "name": "Anthem Blue Cross",
     "type": "commercial",
-    "aliases": ["Anthem", "Anthem BC", "Anthem Blue Cross of California", "Blue Cross of California", "Anthem Blue Cross Life and Health", "Elevance Health"],
+    "aliases": ["Blue Cross", "Anthem", "Anthem BC", "Anthem Blue Cross of California", "Blue Cross of California", "Anthem Blue Cross Life and Health", "Elevance Health"],
     "products": ["hmo", "ppo", "epo", "exchange", "medicare_advantage"]
   },
   {
@@ -88,6 +88,41 @@
     "name": "SCAN Health Plan",
     "type": "medicare_advantage",
     "aliases": ["SCAN"],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "inland-empire-health-plan",
+    "name": "Inland Empire Health Plan",
+    "type": "medi_cal",
+    "aliases": ["IEHP"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "la-care",
+    "name": "L.A. Care Health Plan",
+    "type": "medi_cal",
+    "aliases": ["LA Care", "LA Care Health Plan", "L.A. Care"],
+    "products": ["medi_cal", "exchange", "medicare_advantage"]
+  },
+  {
+    "slug": "caloptima",
+    "name": "CalOptima Health",
+    "type": "medi_cal",
+    "aliases": ["CalOptima", "Cal Optima"],
+    "products": ["medi_cal", "medicare_advantage"]
+  },
+  {
+    "slug": "alignment-health",
+    "name": "Alignment Health Plan",
+    "type": "medicare_advantage",
+    "aliases": ["Alignment Health"],
+    "products": ["medicare_advantage"]
+  },
+  {
+    "slug": "brand-new-day",
+    "name": "Brand New Day",
+    "type": "medicare_advantage",
+    "aliases": [],
     "products": ["medicare_advantage"]
   },
   {

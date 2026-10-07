@@ -39,10 +39,27 @@ export default async function HospitalPage({ params }: Props) {
       <h1>{h.name}</h1>
       {!h.verified && <UnverifiedBadge text={t.common.notVerified} help={t.common.notVerifiedHelp} />}
       <dl className="facts">
-        <dt>{t.hospitals.address}</dt>
-        <dd>
-          {h.address_line1}, {h.city}, {h.state} {h.zip}
-        </dd>
+        {h.campuses.length > 0 ? (
+          <>
+            <dt>{t.hospitals.campuses}</dt>
+            <dd>
+              <ul className="plain-list">
+                {h.campuses.map((c) => (
+                  <li key={c.name}>
+                    <strong>{c.name}</strong> — {c.address}
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </>
+        ) : (
+          <>
+            <dt>{t.hospitals.address}</dt>
+            <dd>
+              {h.address_line1}, {h.city}, {h.state} {h.zip}
+            </dd>
+          </>
+        )}
         <dt>{t.hospitals.website}</dt>
         <dd>
           <a href={h.website} rel="noopener noreferrer">

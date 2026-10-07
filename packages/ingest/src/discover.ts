@@ -56,19 +56,24 @@ export function parseCmsHptTxt(text: string): HptEntry[] {
 }
 
 /**
- * Pick this hospital's file. `match` terms are case-insensitive substrings of
+ * Pick this hospital's file(s). `match` terms are case-insensitive substrings of
  * location-name. With no terms, a single-entry file is accepted as-is.
+ *
+ * Every distinct mrf-url that matches is treated as one part of the hospital's
+ * file (UC San Diego splits its file into 33 parts), so keep match terms
+ * specific enough not to pull in another hospital's file. The loader also warns
+ * when a file's own hospital name doesn't match.
  */
-export function selectEntry(entries: HptEntry[], match: string[]): HptEntry {
+export function selectEntries(entries: HptEntry[], match: string[]): HptEntry[] {
   const terms = match.map((m) => m.toLowerCase());
   const hits = terms.length
     ? entries.filter((e) => terms.some((t) => e.locationName.toLowerCase().includes(t)))
     : entries.length === 1
       ? entries
       : [];
-  const urls = [...new Set(hits.map((h) => h.mrfUrl))];
-  if (urls.length === 1) return hits[0]!;
+  const seen = new Set<string>();
+  const unique = hits.filter((h) => !seen.has(h.mrfUrl) && seen.add(h.mrfUrl));
+  if (unique.length) return unique;
   const names = entries.map((e) => `"${e.locationName}"`).join(", ");
-  if (!urls.length) throw new Error(`No cms-hpt.txt entry matched ${JSON.stringify(match)}. Locations listed: ${names}`);
-  throw new Error(`${urls.length} different files matched ${JSON.stringify(match)}; narrow locationNameMatch. Locations listed: ${names}`);
+  throw new Error(`No cms-hpt.txt entry matched ${JSON.stringify(match)}. Locations listed: ${names}`);
 }

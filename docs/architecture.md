@@ -73,7 +73,7 @@ each payer + product type. This is the only fact-derived table the website reads
 
 A hospital replaces its whole file at once, so we do too:
 
-1. Build the new version in standalone tables (`charge_items_h12_f345`, …).
+1. Build the new version in standalone tables (`charge_items_h12_f345_<load tag>`, …).
 2. `COPY` in, build indexes, `ANALYZE` — while nobody reads them.
 3. In one short transaction, `DETACH` the old partitions and `ATTACH` the new.
 4. `DROP` the old tables.

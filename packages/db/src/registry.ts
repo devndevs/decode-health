@@ -20,6 +20,7 @@ import {
   PovertyGuidelineSchema,
   ProgramSchema,
   RegionSchema,
+  SERVICE_CATEGORIES,
   ServiceSchema,
   type HealthSystem,
   type Hospital,
@@ -194,24 +195,25 @@ export async function syncRegistry(pool: Pool, reg: Registry): Promise<SyncResul
       await c.query(
         `INSERT INTO hospitals (slug, name, system_id, region_id, address_line1, city, state, zip, lat, lng,
            ccn, npis, state_license, hcai_id, website, phone, financial_assistance_url,
-           cms_hpt_txt_url, location_name_match, mrf_url_pinned, source_page_url, verified)
+           cms_hpt_txt_url, location_name_match, mrf_urls_pinned, source_page_url, verified, campuses)
          VALUES ($1, $2, (SELECT id FROM health_systems WHERE slug = $3), (SELECT id FROM regions WHERE slug = $4),
-           $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
+           $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
          ON CONFLICT (slug) DO UPDATE SET name = EXCLUDED.name, system_id = EXCLUDED.system_id,
            region_id = EXCLUDED.region_id, address_line1 = EXCLUDED.address_line1, city = EXCLUDED.city,
            state = EXCLUDED.state, zip = EXCLUDED.zip, lat = EXCLUDED.lat, lng = EXCLUDED.lng, ccn = EXCLUDED.ccn,
            npis = EXCLUDED.npis, state_license = EXCLUDED.state_license, hcai_id = EXCLUDED.hcai_id,
            website = EXCLUDED.website, phone = EXCLUDED.phone,
            financial_assistance_url = EXCLUDED.financial_assistance_url, cms_hpt_txt_url = EXCLUDED.cms_hpt_txt_url,
-           location_name_match = EXCLUDED.location_name_match, mrf_url_pinned = EXCLUDED.mrf_url_pinned,
+           location_name_match = EXCLUDED.location_name_match, mrf_urls_pinned = EXCLUDED.mrf_urls_pinned,
+           campuses = EXCLUDED.campuses,
            source_page_url = COALESCE(EXCLUDED.source_page_url, hospitals.source_page_url),
            verified = EXCLUDED.verified, updated_at = now()`,
         [
           h.slug, h.name, h.system ?? null, h.region, h.address.line1, h.address.city, h.address.state, h.address.zip,
           h.location?.lat ?? null, h.location?.lng ?? null, h.identifiers.ccn, h.identifiers.npi,
           h.identifiers.stateLicense, h.identifiers.hcaiId, h.website, h.phone ?? null, h.financialAssistanceUrl,
-          h.priceTransparency.cmsHptTxtUrl, h.priceTransparency.locationNameMatch, h.priceTransparency.mrfUrl,
-          h.priceTransparency.sourcePageUrl, h.verified,
+          h.priceTransparency.cmsHptTxtUrl, h.priceTransparency.locationNameMatch, h.priceTransparency.mrfUrls,
+          h.priceTransparency.sourcePageUrl, h.verified, JSON.stringify(h.campuses),
         ],
       );
     }
@@ -238,8 +240,12 @@ export async function syncRegistry(pool: Pool, reg: Registry): Promise<SyncResul
       );
     }
 
+    // Catalog order follows SERVICE_CATEGORIES (office visits first), then file order.
+    const ordered = [...reg.services].sort(
+      (a, b) => SERVICE_CATEGORIES.indexOf(a.category) - SERVICE_CATEGORIES.indexOf(b.category),
+    );
     let order = 0;
-    for (const s of reg.services) {
+    for (const s of ordered) {
       const { rows } = await c.query<{ id: number }>(
         `INSERT INTO services (slug, category, benefit_category, setting, aca_preventive, name, summary, keywords, sort_order)
          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)

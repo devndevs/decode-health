@@ -31,9 +31,14 @@ export type ProductType = (typeof PRODUCT_TYPES)[number];
 
 const LEGAL_SUFFIXES = new Set(["inc", "llc", "co", "corp", "corporation", "company", "ltd", "the"]);
 
-/** Lowercase, strip punctuation and trailing legal suffixes, collapse whitespace. */
+/**
+ * Lowercase, strip punctuation and trailing legal suffixes, collapse whitespace.
+ * Bracketed numeric IDs are dropped: UC San Diego writes "AETNA [1003]", where the
+ * number is its internal contract ID, not part of the payer's name.
+ */
 export function normalizeName(raw: string | null | undefined): string {
   const tokens = (raw ?? "")
+    .replace(/\[\s*\d+\s*\]/g, " ")
     .toLowerCase()
     .replace(/&/g, " and ")
     .replace(/[^a-z0-9]+/g, " ")

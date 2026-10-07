@@ -28,8 +28,18 @@ and put a distinctive part of its `location-name` in `locationNameMatch`. If
 several locations share one file (one license, multiple campuses), it's fine
 for multiple registry entries to match the same `mrf-url`.
 
-If the txt file is missing or broken, set `priceTransparency.mrfUrl` to the
-file URL from the hospital's price transparency page.
+If the txt file is missing or broken, set `priceTransparency.mrfUrls` to the
+file URL(s) from the hospital's price transparency page — every part, in order,
+if the hospital splits its file.
+
+### One license, several campuses
+
+Price files are published per hospital *license*, and one license often covers
+several buildings. Make **one** registry entry per file and list the buildings
+under `campuses` (the file's `location_name` and `hospital_address` fields have
+them). Separate entries for each campus would load the same prices several
+times and show identical "hospitals" side by side. UC San Diego is the example:
+one entry, five campuses.
 
 ### Verification checklist
 

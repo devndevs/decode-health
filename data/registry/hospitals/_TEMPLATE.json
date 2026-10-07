@@ -4,13 +4,14 @@
   "system": "health-system-slug-from-systems-json",
   "region": "ca-<county>-county",
   "address": { "line1": "123 Street", "city": "City", "state": "CA", "zip": "90000" },
+  "campuses": [],
   "identifiers": { "ccn": null, "npi": [], "stateLicense": null, "hcaiId": null },
   "website": "https://hospital.example.org",
   "financialAssistanceUrl": null,
   "priceTransparency": {
     "cmsHptTxtUrl": "https://hospital.example.org/cms-hpt.txt",
     "locationNameMatch": ["Distinctive part of the location-name in cms-hpt.txt"],
-    "mrfUrl": null
+    "mrfUrls": []
   },
   "verified": false,
   "notes": "Copy this file to hospitals/<state>/<county>/<slug>.json. Files starting with _ are ignored. See docs/adding-a-hospital.md."

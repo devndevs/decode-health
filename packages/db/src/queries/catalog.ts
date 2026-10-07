@@ -50,6 +50,7 @@ export async function listHospitals(pool: Pool, regionSlug?: string): Promise<Ho
 }
 
 export interface HospitalDetail extends HospitalListRow {
+  campuses: Array<{ name: string; address: string }>;
   address_line1: string;
   state: string;
   zip: string;
@@ -68,7 +69,7 @@ export async function getHospital(pool: Pool, slug: string): Promise<HospitalDet
     `SELECT h.id, h.slug, h.name, h.city, r.name AS region_name, s.name AS system_name,
             to_char(f.last_updated_on, 'YYYY-MM-DD') AS last_updated_on,
             h.current_mrf_file_id IS NOT NULL AS has_prices,
-            h.address_line1, h.state, h.zip, h.website, h.phone, h.financial_assistance_url, h.source_page_url,
+            h.campuses, h.address_line1, h.state, h.zip, h.website, h.phone, h.financial_assistance_url, h.source_page_url,
             r.path AS region_path, h.verified, f.template_version, f.fetched_at
      FROM hospitals h
      JOIN regions r ON r.id = h.region_id
