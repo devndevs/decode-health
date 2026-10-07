@@ -28,7 +28,7 @@ import { migrate } from "@decode-health/db/migrate";
 import { loadRegistry, syncRegistry, RegistryError } from "@decode-health/db/registry";
 import { parseMrfFile } from "./parsers";
 import { discoverHospital, ingestHospital, ingestLocalFile, type IngestContext } from "./pipeline";
-import { LocalStorage } from "./storage";
+import { storageFromEnv } from "./storage";
 import { writeWorkDir } from "./writer";
 
 const REPO_ROOT = fileURLToPath(new URL("../../../", import.meta.url));
@@ -59,7 +59,7 @@ const log = (msg: string) => console.log(`[${new Date().toISOString().slice(11, 
 function context(pool: Pool): IngestContext {
   return {
     pool,
-    storage: new LocalStorage(DATA_DIR),
+    storage: storageFromEnv(DATA_DIR),
     dataDir: DATA_DIR,
     userAgent: process.env.INGEST_USER_AGENT ?? "DecodeHealthBot/0.1",
     maxBytes: Number(process.env.INGEST_MAX_FILE_BYTES ?? 20 * 1024 ** 3),

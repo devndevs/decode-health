@@ -11,8 +11,14 @@ next-env.d.ts
 .env.*
 !.env.example
 
-# Downloaded machine-readable files and ingest work dirs (can be many GB)
+# Downloaded machine-readable files and ingest work dirs (can be many GB).
+# Keep hospital price files here or in object storage — never in git.
 .data/
+*[Ss]tandard[-_][Cc]harges*
+*[Ss]tandard[Cc]harges*
+*standardcharges*
+*_mrf.json
+*_mrf.csv
 
 .DS_Store
 *.log

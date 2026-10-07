@@ -23,6 +23,9 @@ jobs:
     env:
       # Enables the end-to-end ingest → database → estimate test.
       TEST_DATABASE_URL: postgres://decode:decode@localhost:5432/postgres
+      # Enables the S3/R2 storage adapter test against a local S3-compatible server.
+      TEST_S3_ENDPOINT: http://127.0.0.1:5055
+      AWS_EC2_METADATA_DISABLED: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -30,6 +33,15 @@ jobs:
         with:
           node-version-file: .nvmrc
           cache: pnpm
+      - run: pnpm check:files
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Start local S3-compatible server
+        run: |
+          python -m pip install --quiet "moto[server]"
+          nohup moto_server -p 5055 > /tmp/moto.log 2>&1 &
+          for i in $(seq 1 30); do curl -s -o /dev/null http://127.0.0.1:5055 && break; sleep 1; done
       - run: pnpm install --frozen-lockfile
       - run: pnpm typecheck
       - run: pnpm ingest registry:check

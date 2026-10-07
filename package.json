@@ -11,6 +11,7 @@
     "build": "pnpm --filter @decode-health/web build",
     "start": "pnpm --filter @decode-health/web start",
     "typecheck": "pnpm -r typecheck",
+    "check:files": "node scripts/check-no-data-files.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "db:up": "docker compose up -d db",
